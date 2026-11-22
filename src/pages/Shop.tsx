@@ -17,6 +17,8 @@ import { PageShell } from '../components/PageShell';
 import { ProductGridSkeleton, ShopFiltersSkeleton } from '../components/ui/skeleton';
 import { useLanguage } from '../context/LanguageContext';
 import { translateDynamic } from '../locales/dynamicTranslations';
+import { useCollections } from '../hooks/useCollections';
+import { optimizeImageUrl } from '../lib/optimizeImage';
 
 type SortOption = 'featured' | 'price-low' | 'price-high' | 'rating';
 
@@ -464,6 +466,7 @@ export const Shop: React.FC = () => {
 
   const { data: dbCategories, isLoading: categoriesLoading } = useCategories();
   const { data: dbSections } = useSections();
+  const { data: collections } = useCollections();
 
   const activeProducts: Product[] = useMemo(() => dbProducts ?? [], [dbProducts]);
 
@@ -833,6 +836,28 @@ export const Shop: React.FC = () => {
         title={language === 'ar' ? 'جميع الملابس' : 'All Garments'} 
         trailing={shopToolbar} 
       />
+
+      {/* Collection banner — shown when browsing a collection that has one (e.g. Al Alisha Collection) */}
+      {(() => {
+        const banner = selectedSection !== 'all' ? collections?.find((c) => c.slug === selectedSection) : undefined;
+        if (!banner?.bannerImage) return null;
+        const desktopSrc = optimizeImageUrl(banner.bannerImage, 1600);
+        const mobileSrc = banner.mobileBanner ? optimizeImageUrl(banner.mobileBanner, 800) : undefined;
+        return (
+          <div className="mb-6 md:mb-8 overflow-hidden rounded-2xl border border-brand-border/30 shadow-sm bg-brand-cream">
+            <picture>
+              {mobileSrc && <source media="(max-width: 767px)" srcSet={mobileSrc} />}
+              <img
+                src={desktopSrc}
+                alt={translateDynamic(banner.name, language)}
+                className="w-full h-auto block"
+                loading="eager"
+                decoding="async"
+              />
+            </picture>
+          </div>
+        );
+      })()}
 
       <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-start">
         <aside
