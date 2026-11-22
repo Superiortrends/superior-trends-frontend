@@ -84,7 +84,7 @@ export const AdminBlogCategories: React.FC = () => {
   const totalPosts = categories?.reduce((s, c) => s + (c._count?.posts ?? 0), 0) ?? 0;
 
   const inputCls =
-    'w-full px-3 py-2.5 text-sm rounded-lg border border-neutral-200 bg-white ' +
+    'w-full px-3 py-2.5 text-[15px] rounded-lg border border-neutral-200 bg-white ' +
     'focus:outline-none focus:ring-2 focus:ring-[#8b1a2a]/20 focus:border-[#8b1a2a] ' +
     'transition-all placeholder:text-neutral-300';
 
@@ -99,12 +99,12 @@ export const AdminBlogCategories: React.FC = () => {
               <FolderTree size={20} className="text-[#8b1a2a]" />
               <h1 className="text-2xl font-bold text-neutral-900 tracking-tight">Blog Categories</h1>
             </div>
-            <p className="text-sm text-neutral-500">Organize style journal posts under distinct categories.</p>
+            <p className="text-[15px] text-neutral-500">Organize style journal posts under distinct categories.</p>
           </div>
           <button
             type="button"
             onClick={() => { resetForm(); setIsFormOpen(true); }}
-            className="inline-flex items-center gap-2 bg-[#8b1a2a] text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-[#7a1725] active:scale-95 transition-all shadow-sm shadow-[#8b1a2a]/30 whitespace-nowrap"
+            className="inline-flex items-center gap-2 bg-[#8b1a2a] text-white px-5 py-2.5 rounded-xl text-[15px] font-semibold hover:bg-[#7a1725] active:scale-95 transition-all shadow-sm shadow-[#8b1a2a]/30 whitespace-nowrap"
           >
             <Plus size={16} /> New Category
           </button>
@@ -114,11 +114,11 @@ export const AdminBlogCategories: React.FC = () => {
         <div className="grid grid-cols-2 gap-3">
           <div className="bg-white rounded-xl border border-neutral-200 px-4 py-3">
             <div className="text-2xl font-bold text-neutral-800">{total}</div>
-            <div className="text-[11px] text-neutral-400 font-medium mt-0.5">Categories</div>
+            <div className="text-[13px] text-neutral-400 font-medium mt-0.5">Categories</div>
           </div>
           <div className="bg-white rounded-xl border border-neutral-200 px-4 py-3">
             <div className="text-2xl font-bold text-[#8b1a2a]">{totalPosts}</div>
-            <div className="text-[11px] text-neutral-400 font-medium mt-0.5">Posts linked</div>
+            <div className="text-[13px] text-neutral-400 font-medium mt-0.5">Posts linked</div>
           </div>
         </div>
 
@@ -126,15 +126,15 @@ export const AdminBlogCategories: React.FC = () => {
         {isLoading ? (
           <div className="flex justify-center items-center py-24 gap-3 text-neutral-400">
             <Loader2 className="animate-spin text-[#8b1a2a]" size={22} />
-            <span className="text-sm">Loading categories…</span>
+            <span className="text-[15px]">Loading categories…</span>
           </div>
         ) : !categories?.length ? (
           <div className="text-center py-20 border border-dashed border-neutral-200 bg-white rounded-2xl">
             <div className="w-12 h-12 rounded-2xl bg-neutral-100 flex items-center justify-center mx-auto mb-3">
               <FolderTree size={22} className="text-neutral-400" />
             </div>
-            <p className="text-sm font-semibold text-neutral-600">No categories yet</p>
-            <p className="text-xs text-neutral-400 mt-1">Create your first category to start organizing posts.</p>
+            <p className="text-[15px] font-semibold text-neutral-600">No categories yet</p>
+            <p className="text-[13px] text-neutral-400 mt-1">Create your first category to start organizing posts.</p>
           </div>
         ) : (
           <div className="bg-white border border-neutral-200 shadow-sm rounded-2xl overflow-hidden">
@@ -142,10 +142,10 @@ export const AdminBlogCategories: React.FC = () => {
               <table className="w-full min-w-[480px] text-left border-collapse">
                 <thead>
                   <tr className="border-b border-neutral-100 bg-neutral-50/80">
-                    <th className="px-5 py-3.5 text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Category</th>
-                    <th className="px-5 py-3.5 text-[10px] font-bold text-neutral-400 uppercase tracking-widest hidden sm:table-cell">Slug</th>
-                    <th className="px-5 py-3.5 text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Posts</th>
-                    <th className="px-5 py-3.5 text-[10px] font-bold text-neutral-400 uppercase tracking-widest text-right">Actions</th>
+                    <th className="px-5 py-3.5 text-xs font-bold text-neutral-400 uppercase tracking-widest">Category</th>
+                    <th className="px-5 py-3.5 text-xs font-bold text-neutral-400 uppercase tracking-widest hidden sm:table-cell">Slug</th>
+                    <th className="px-5 py-3.5 text-xs font-bold text-neutral-400 uppercase tracking-widest">Posts</th>
+                    <th className="px-5 py-3.5 text-xs font-bold text-neutral-400 uppercase tracking-widest text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-neutral-100">
@@ -156,16 +156,16 @@ export const AdminBlogCategories: React.FC = () => {
                           <div className="w-7 h-7 rounded-lg bg-[#8b1a2a]/8 flex items-center justify-center shrink-0">
                             <Tag size={12} className="text-[#8b1a2a]" />
                           </div>
-                          <span className="text-sm font-semibold text-neutral-800">{cat.name}</span>
+                          <span className="text-[15px] font-semibold text-neutral-800">{cat.name}</span>
                         </div>
                       </td>
                       <td className="px-5 py-4 hidden sm:table-cell">
-                        <span className="text-[11px] font-mono text-neutral-400 bg-neutral-100 px-2 py-1 rounded-md">
+                        <span className="text-[13px] font-mono text-neutral-400 bg-neutral-100 px-2 py-1 rounded-md">
                           {cat.slug}
                         </span>
                       </td>
                       <td className="px-5 py-4">
-                        <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold border ${
+                        <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold border ${
                           (cat._count?.posts ?? 0) > 0
                             ? 'bg-[#8b1a2a]/8 text-[#8b1a2a] border-[#8b1a2a]/20'
                             : 'bg-neutral-100 text-neutral-400 border-neutral-200'
@@ -222,7 +222,7 @@ export const AdminBlogCategories: React.FC = () => {
                 <h2 className="text-lg font-bold text-neutral-900">
                   {editingCategory ? 'Edit Category' : 'New Category'}
                 </h2>
-                <p className="text-xs text-neutral-400 mt-0.5">
+                <p className="text-[13px] text-neutral-400 mt-0.5">
                   {editingCategory ? `Editing "${editingCategory.name}"` : 'Add a new blog category'}
                 </p>
               </div>
@@ -239,7 +239,7 @@ export const AdminBlogCategories: React.FC = () => {
               <div data-modal-scroll className="px-6 py-6 space-y-5 overflow-y-auto overscroll-contain">
 
                 <div>
-                  <label className="block text-[10px] font-bold uppercase tracking-widest text-neutral-400 mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-widest text-neutral-400 mb-1">
                     Category name *
                   </label>
                   <input
@@ -254,7 +254,7 @@ export const AdminBlogCategories: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-bold uppercase tracking-widest text-neutral-400 mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-widest text-neutral-400 mb-1">
                     Slug <span className="normal-case font-normal text-neutral-300">(optional)</span>
                   </label>
                   <input
@@ -264,7 +264,7 @@ export const AdminBlogCategories: React.FC = () => {
                     onChange={e => setSlug(e.target.value)}
                     className={inputCls + ' font-mono'}
                   />
-                  <p className="text-[10px] text-neutral-400 mt-1.5">
+                  <p className="text-xs text-neutral-400 mt-1.5">
                     Leave blank to auto-generate from the name.
                   </p>
                 </div>
@@ -272,8 +272,8 @@ export const AdminBlogCategories: React.FC = () => {
                 {/* Preview chip */}
                 {name.trim() && (
                   <div className="flex items-center gap-2 pt-1">
-                    <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider">Preview:</span>
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#8b1a2a]/8 text-[#8b1a2a] border border-[#8b1a2a]/20 text-xs font-semibold">
+                    <span className="text-xs font-bold text-neutral-400 uppercase tracking-wider">Preview:</span>
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#8b1a2a]/8 text-[#8b1a2a] border border-[#8b1a2a]/20 text-[13px] font-semibold">
                       <Tag size={10} />
                       {name.trim()}
                     </span>
@@ -286,14 +286,14 @@ export const AdminBlogCategories: React.FC = () => {
                 <button
                   type="button"
                   onClick={resetForm}
-                  className="px-5 py-2.5 text-sm font-semibold text-neutral-600 bg-neutral-100 hover:bg-neutral-200 rounded-xl transition-colors"
+                  className="px-5 py-2.5 text-[15px] font-semibold text-neutral-600 bg-neutral-100 hover:bg-neutral-200 rounded-xl transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={pending}
-                  className="px-5 py-2.5 text-sm font-semibold text-white bg-[#8b1a2a] hover:bg-[#7a1725] rounded-xl transition-colors flex items-center gap-2 disabled:opacity-70 shadow-sm shadow-[#8b1a2a]/30 active:scale-95"
+                  className="px-5 py-2.5 text-[15px] font-semibold text-white bg-[#8b1a2a] hover:bg-[#7a1725] rounded-xl transition-colors flex items-center gap-2 disabled:opacity-70 shadow-sm shadow-[#8b1a2a]/30 active:scale-95"
                 >
                   {pending && <Loader2 className="animate-spin" size={15} />}
                   {editingCategory ? 'Save changes' : 'Create category'}

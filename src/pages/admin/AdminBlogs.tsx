@@ -134,9 +134,9 @@ export const AdminBlogs: React.FC = () => {
   const drafts    = total - published;
 
   /* ── Shared field styles ── */
-  const inputCls = 'w-full px-3 py-2.5 text-sm rounded-lg border border-neutral-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#8b1a2a]/20 focus:border-[#8b1a2a] transition-all placeholder:text-neutral-300';
+  const inputCls = 'w-full px-3 py-2.5 text-[15px] rounded-lg border border-neutral-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#8b1a2a]/20 focus:border-[#8b1a2a] transition-all placeholder:text-neutral-300';
   const Label = ({ children }: { children: React.ReactNode }) => (
-    <label className="block text-[10px] font-bold uppercase tracking-widest text-neutral-400 mb-1">{children}</label>
+    <label className="block text-xs font-bold uppercase tracking-widest text-neutral-400 mb-1">{children}</label>
   );
 
   return (
@@ -150,12 +150,12 @@ export const AdminBlogs: React.FC = () => {
               <BookOpen size={20} className="text-[#8b1a2a]" />
               <h1 className="text-2xl font-bold text-neutral-900 tracking-tight">Blog Posts</h1>
             </div>
-            <p className="text-sm text-neutral-500">Create and publish stories for the Style Journal.</p>
+            <p className="text-[15px] text-neutral-500">Create and publish stories for the Style Journal.</p>
           </div>
           <button
             type="button"
             onClick={openCreate}
-            className="inline-flex items-center gap-2 bg-[#8b1a2a] text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-[#7a1725] active:scale-95 transition-all shadow-sm shadow-[#8b1a2a]/30 whitespace-nowrap"
+            className="inline-flex items-center gap-2 bg-[#8b1a2a] text-white px-5 py-2.5 rounded-xl text-[15px] font-semibold hover:bg-[#7a1725] active:scale-95 transition-all shadow-sm shadow-[#8b1a2a]/30 whitespace-nowrap"
           >
             <Plus size={16} /> New Post
           </button>
@@ -170,7 +170,7 @@ export const AdminBlogs: React.FC = () => {
           ].map(({ label, value, color }) => (
             <div key={label} className="bg-white rounded-xl border border-neutral-200 px-4 py-3">
               <div className={`text-2xl font-bold ${color}`}>{value}</div>
-              <div className="text-[11px] text-neutral-400 font-medium mt-0.5">{label}</div>
+              <div className="text-[13px] text-neutral-400 font-medium mt-0.5">{label}</div>
             </div>
           ))}
         </div>
@@ -179,15 +179,15 @@ export const AdminBlogs: React.FC = () => {
         {isLoading ? (
           <div className="flex justify-center items-center py-24 gap-3 text-neutral-400">
             <Loader2 className="animate-spin text-[#8b1a2a]" size={22} />
-            <span className="text-sm">Loading posts…</span>
+            <span className="text-[15px]">Loading posts…</span>
           </div>
         ) : !posts?.length ? (
           <div className="text-center py-20 border border-dashed border-neutral-200 bg-white rounded-2xl">
             <div className="w-12 h-12 rounded-2xl bg-neutral-100 flex items-center justify-center mx-auto mb-3">
               <FileText size={22} className="text-neutral-400" />
             </div>
-            <p className="text-sm font-semibold text-neutral-600">No blog posts yet</p>
-            <p className="text-xs text-neutral-400 mt-1">Click "New Post" to write your first story.</p>
+            <p className="text-[15px] font-semibold text-neutral-600">No blog posts yet</p>
+            <p className="text-[13px] text-neutral-400 mt-1">Click "New Post" to write your first story.</p>
           </div>
         ) : (
           <div className="bg-white border border-neutral-200 shadow-sm rounded-2xl overflow-hidden">
@@ -195,11 +195,11 @@ export const AdminBlogs: React.FC = () => {
               <table className="w-full min-w-[600px] text-left border-collapse">
                 <thead>
                   <tr className="border-b border-neutral-100 bg-neutral-50/80">
-                    <th className="px-5 py-3.5 text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Post</th>
-                    <th className="px-5 py-3.5 text-[10px] font-bold text-neutral-400 uppercase tracking-widest hidden sm:table-cell">Tag</th>
-                    <th className="px-5 py-3.5 text-[10px] font-bold text-neutral-400 uppercase tracking-widest hidden md:table-cell">Read time</th>
-                    <th className="px-5 py-3.5 text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Status</th>
-                    <th className="px-5 py-3.5 text-[10px] font-bold text-neutral-400 uppercase tracking-widest text-right">Actions</th>
+                    <th className="px-5 py-3.5 text-xs font-bold text-neutral-400 uppercase tracking-widest">Post</th>
+                    <th className="px-5 py-3.5 text-xs font-bold text-neutral-400 uppercase tracking-widest hidden sm:table-cell">Tag</th>
+                    <th className="px-5 py-3.5 text-xs font-bold text-neutral-400 uppercase tracking-widest hidden md:table-cell">Read time</th>
+                    <th className="px-5 py-3.5 text-xs font-bold text-neutral-400 uppercase tracking-widest">Status</th>
+                    <th className="px-5 py-3.5 text-xs font-bold text-neutral-400 uppercase tracking-widest text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-neutral-100">
@@ -212,21 +212,21 @@ export const AdminBlogs: React.FC = () => {
                             : <div className="w-10 h-10 rounded-lg bg-neutral-100 flex items-center justify-center shrink-0"><FileText size={16} className="text-neutral-400" /></div>
                           }
                           <div className="min-w-0">
-                            <p className="text-sm font-semibold text-neutral-900 truncate max-w-[260px]">{post.title}</p>
-                            <p className="text-[10px] text-neutral-400 font-mono mt-0.5 truncate max-w-[260px]">{post.slug}</p>
+                            <p className="text-[15px] font-semibold text-neutral-900 truncate max-w-[260px]">{post.title}</p>
+                            <p className="text-xs text-neutral-400 font-mono mt-0.5 truncate max-w-[260px]">{post.slug}</p>
                           </div>
                         </div>
                       </td>
                       <td className="px-5 py-4 hidden sm:table-cell">
-                        <span className="text-[10px] font-semibold text-neutral-500 bg-neutral-100 px-2 py-1 rounded-md">
+                        <span className="text-xs font-semibold text-neutral-500 bg-neutral-100 px-2 py-1 rounded-md">
                           {post.tag || 'Editorial'}
                         </span>
                       </td>
                       <td className="px-5 py-4 hidden md:table-cell">
-                        <span className="text-xs text-neutral-500">{post.readMinutes} min</span>
+                        <span className="text-[13px] text-neutral-500">{post.readMinutes} min</span>
                       </td>
                       <td className="px-5 py-4">
-                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold border ${post.isPublished ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-amber-50 text-amber-700 border-amber-200'}`}>
+                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border ${post.isPublished ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-amber-50 text-amber-700 border-amber-200'}`}>
                           <span className={`w-1.5 h-1.5 rounded-full ${post.isPublished ? 'bg-emerald-500' : 'bg-amber-400'}`} />
                           {post.isPublished ? 'Published' : 'Draft'}
                         </span>
@@ -284,7 +284,7 @@ export const AdminBlogs: React.FC = () => {
             <div className="shrink-0 flex items-center justify-between px-6 py-5 border-b border-neutral-100">
               <div>
                 <h2 className="text-lg font-bold text-neutral-900">{editing ? 'Edit Post' : 'New Post'}</h2>
-                <p className="text-xs text-neutral-400 mt-0.5">{editing ? `Editing "${editing.title}"` : 'Write a new blog post for the Style Journal'}</p>
+                <p className="text-[13px] text-neutral-400 mt-0.5">{editing ? `Editing "${editing.title}"` : 'Write a new blog post for the Style Journal'}</p>
               </div>
               <button onClick={resetForm} className="p-2 rounded-xl text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 transition-colors border border-neutral-200">
                 <X size={18} />
@@ -328,7 +328,7 @@ export const AdminBlogs: React.FC = () => {
                           key={t}
                           type="button"
                           onClick={() => setForm({ ...form, tag: t })}
-                          className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${form.tag === t ? 'bg-[#8b1a2a] text-white border-[#8b1a2a]' : 'bg-white text-neutral-600 border-neutral-200 hover:border-neutral-300'}`}
+                          className={`px-3 py-1.5 rounded-lg text-[13px] font-semibold border transition-all ${form.tag === t ? 'bg-[#8b1a2a] text-white border-[#8b1a2a]' : 'bg-white text-neutral-600 border-neutral-200 hover:border-neutral-300'}`}
                         >
                           {t}
                         </button>
@@ -382,7 +382,7 @@ export const AdminBlogs: React.FC = () => {
                       type="button"
                       onClick={() => fileRef.current?.click()}
                       disabled={uploading}
-                      className="inline-flex items-center gap-2 px-4 py-2.5 border border-neutral-200 rounded-lg text-xs font-semibold text-neutral-600 hover:border-neutral-300 bg-white transition-colors whitespace-nowrap disabled:opacity-60"
+                      className="inline-flex items-center gap-2 px-4 py-2.5 border border-neutral-200 rounded-lg text-[13px] font-semibold text-neutral-600 hover:border-neutral-300 bg-white transition-colors whitespace-nowrap disabled:opacity-60"
                     >
                       {uploading ? <Loader2 size={13} className="animate-spin" /> : <Upload size={13} />}
                       {uploading ? 'Uploading…' : 'Upload'}
@@ -415,29 +415,29 @@ export const AdminBlogs: React.FC = () => {
                     <input type="checkbox" checked={form.isPublished} onChange={e => setForm({ ...form, isPublished: e.target.checked })} className="sr-only" />
                   </div>
                   <div>
-                    <div className="text-sm font-semibold text-neutral-800">Publish on storefront</div>
-                    <div className="text-[11px] text-neutral-400">{form.isPublished ? 'Post is live and visible to readers' : 'Saved as draft — not visible to readers'}</div>
+                    <div className="text-[15px] font-semibold text-neutral-800">Publish on storefront</div>
+                    <div className="text-[13px] text-neutral-400">{form.isPublished ? 'Post is live and visible to readers' : 'Saved as draft — not visible to readers'}</div>
                   </div>
                 </label>
               </div>
 
               {/* sticky footer */}
               <div className="shrink-0 flex justify-between items-center gap-3 px-6 py-4 border-t border-neutral-100 bg-white">
-                <div className="text-xs text-neutral-400 hidden sm:block">
+                <div className="text-[13px] text-neutral-400 hidden sm:block">
                   {editing ? `Editing post ID: ${editing.id.slice(0, 8)}…` : 'New post'}
                 </div>
                 <div className="flex gap-3 ml-auto">
                   <button
                     type="button"
                     onClick={resetForm}
-                    className="px-5 py-2.5 text-sm font-semibold text-neutral-600 bg-neutral-100 hover:bg-neutral-200 rounded-xl transition-colors"
+                    className="px-5 py-2.5 text-[15px] font-semibold text-neutral-600 bg-neutral-100 hover:bg-neutral-200 rounded-xl transition-colors"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={pending}
-                    className="px-5 py-2.5 text-sm font-semibold text-white bg-[#8b1a2a] hover:bg-[#7a1725] rounded-xl transition-colors flex items-center gap-2 disabled:opacity-70 shadow-sm shadow-[#8b1a2a]/30 active:scale-95"
+                    className="px-5 py-2.5 text-[15px] font-semibold text-white bg-[#8b1a2a] hover:bg-[#7a1725] rounded-xl transition-colors flex items-center gap-2 disabled:opacity-70 shadow-sm shadow-[#8b1a2a]/30 active:scale-95"
                   >
                     {pending && <Loader2 className="animate-spin" size={15} />}
                     {pending ? 'Saving…' : editing ? 'Save changes' : 'Publish post'}

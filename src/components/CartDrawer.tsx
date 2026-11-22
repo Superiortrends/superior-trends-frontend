@@ -5,6 +5,7 @@ import { useShop } from '../context/ShopContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getProductImageUrl } from '../lib/optimizeImage';
 import { useLanguage } from '../context/LanguageContext';
+import { useDeliverySettings } from '../hooks/useSettings';
 
 export const CartDrawer: React.FC = () => {
   const {
@@ -36,7 +37,9 @@ export const CartDrawer: React.FC = () => {
   };
 
   const finalDiscount = cartTotal * discount;
-  const grandTotal = cartTotal - finalDiscount;
+  const { shippingFor } = useDeliverySettings();
+  const shippingFee = shippingFor(cartTotal);
+  const grandTotal = Math.round(cartTotal - finalDiscount + shippingFee);
 
   const handleCheckoutClick = () => {
     setIsCartOpen(false);
@@ -275,7 +278,11 @@ export const CartDrawer: React.FC = () => {
                     )}
                     <div className="flex justify-between text-brand-text-muted pb-3 border-b border-brand-border/15">
                       <span className="font-light">{language === 'ar' ? 'الشحن' : 'Shipping'}</span>
-                      <span className="font-medium text-brand-charcoal">{language === 'ar' ? 'مجاني' : 'Complimentary'}</span>
+                      <span className="font-medium text-brand-charcoal">
+                        {shippingFee === 0
+                          ? (language === 'ar' ? 'مجاني' : 'Free')
+                          : `OMR ${Number(shippingFee).toLocaleString('en-OM')}`}
+                      </span>
                     </div>
                     <div className="flex justify-between items-center pt-1">
                       <span className="font-display text-lg font-bold text-brand-charcoal uppercase">{language === 'ar' ? 'المجموع الكلي' : 'Total'}</span>

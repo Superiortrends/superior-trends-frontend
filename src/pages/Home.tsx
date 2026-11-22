@@ -32,6 +32,7 @@ import {
   type HomepageSection,
 } from "../hooks/useProducts";
 import { useBanners } from "../hooks/useBanners";
+import { useDeliverySettings } from "../hooks/useSettings";
 import {
   HomeSectionSkeleton,
   HomeSplitSkeleton,
@@ -905,11 +906,13 @@ export const Home: React.FC = () => {
     return () => clearInterval(interval);
   }, [isHoveredStory]);
 
+  const { threshold: freeShippingThreshold, daysLabel } = useDeliverySettings();
+
   const features = [
     {
       icon: <Truck className="w-6 h-6" strokeWidth={1.5} />,
       title: language === 'ar' ? "شحن مجاني" : "Free Shipping",
-      desc: language === 'ar' ? "على جميع الطلبات التي تزيد عن OMR 50. توصيل سريع." : "On all orders above OMR 50. Worldwide delivery.",
+      desc: language === 'ar' ? `على جميع الطلبات التي تزيد عن OMR ${freeShippingThreshold}. التوصيل خلال ${daysLabel('ar')} أيام عمل.` : `On all orders above OMR ${freeShippingThreshold}. Delivery in ${daysLabel('en')} business days.`,
     },
     {
       icon: <RefreshCcw className="w-6 h-6" strokeWidth={1.5} />,

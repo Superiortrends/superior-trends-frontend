@@ -19,6 +19,9 @@ import {
 } from 'lucide-react';
 import { useAuthStore } from '../../store/useAuthStore';
 import { useAdminAuth } from '../../hooks/useAdminAuth';
+import { useContactMessagesAdmin } from '../../hooks/useContact';
+import { useAdminOrders } from '../../hooks/useOrders';
+import { needsAction } from '../../lib/orderHelpers';
 import { AdminSidebarSales } from './AdminSidebarSales';
 import logo from '../../assets/logo.png';
 
@@ -57,6 +60,10 @@ export const AdminLayout: React.FC = () => {
   ];
 
   const closeSidebar = () => setSidebarOpen(false);
+  const { data: contactMessages } = useContactMessagesAdmin();
+  const { data: adminOrders } = useAdminOrders();
+  const ordersToProcess = adminOrders?.filter(needsAction).length ?? 0;
+  const unreadContact = contactMessages?.filter((m: { status: string }) => m.status === 'NEW').length ?? 0;
 
   const SidebarContent = () => (
     <>
@@ -65,10 +72,10 @@ export const AdminLayout: React.FC = () => {
           <img src={logo} alt="Logo" className="h-8 w-8 object-contain block" />
         </div>
         <div className="min-w-0">
-          <h1 className="font-serif font-bold text-sm tracking-widest text-white uppercase truncate">
+          <h1 className="font-serif font-bold text-[15px] tracking-widest text-white uppercase truncate">
             Superior Admin
           </h1>
-          <p className="text-[10px] text-neutral-400">Control Panel</p>
+          <p className="text-xs text-neutral-400">Control Panel</p>
         </div>
         <button
           type="button"
@@ -80,7 +87,9 @@ export const AdminLayout: React.FC = () => {
         </button>
       </div>
 
-      <nav data-lenis-prevent className="flex-1 min-h-0 px-3 sm:px-4 py-4 sm:py-6 space-y-1 overflow-y-auto overscroll-contain">
+      {/* Only this area scrolls — the logo header above and the profile/logout footer below stay fixed */}
+      <div data-lenis-prevent className="flex-1 min-h-0 overflow-y-auto overscroll-contain flex flex-col">
+      <nav className="px-3 sm:px-4 py-4 sm:py-6 space-y-1 shrink-0">
         {navItems.map((item) => {
           const isActive = location.pathname === item.path;
           return (
@@ -88,35 +97,45 @@ export const AdminLayout: React.FC = () => {
               key={item.path}
               to={item.path}
               onClick={closeSidebar}
-              className={`flex items-center gap-3 px-4 py-3 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors ${isActive
+              className={`flex items-center gap-3 px-4 py-3 rounded-lg text-[13px] font-bold uppercase tracking-wider transition-colors ${isActive
                 ? 'bg-[#8b1a2a] text-white'
                 : 'text-neutral-400 hover:bg-neutral-800 hover:text-white'
                 }`}
             >
               {item.icon}
               {item.label}
+              {(() => {
+                const count = item.path === '/admin/contact' ? unreadContact : item.path === '/admin/orders' ? ordersToProcess : 0;
+                return count > 0 ? (
+                  <span className="ml-auto min-w-5 h-5 px-1.5 inline-flex items-center justify-center rounded-full bg-[#8b1a2a] text-white text-xs font-bold">
+                    {count > 99 ? '99+' : count}
+                  </span>
+                ) : null;
+              })()}
             </Link>
           );
         })}
       </nav>
 
       <AdminSidebarSales />
+      </div>
 
-      <div className="p-3 sm:p-4 border-t border-neutral-800 space-y-2 shrink-0">
+      {/* Pinned to the bottom of the sidebar — does not scroll */}
+      <div className="p-3 sm:p-4 border-t border-neutral-800 space-y-2 shrink-0 bg-neutral-900">
         <div className="flex items-center gap-3 px-2 sm:px-4 py-2">
-          <div className="size-8 rounded-full bg-neutral-700 flex items-center justify-center text-xs font-bold text-white uppercase shrink-0">
+          <div className="size-8 rounded-full bg-neutral-700 flex items-center justify-center text-[13px] font-bold text-white uppercase shrink-0">
             {user?.name?.slice(0, 2) || 'AD'}
           </div>
           <div className="overflow-hidden min-w-0">
-            <p className="text-xs font-bold text-white truncate">{user?.name || 'Administrator'}</p>
-            <p className="text-[10px] text-neutral-400 truncate">{user?.email || 'admin@superiortrends.com'}</p>
+            <p className="text-[13px] font-bold text-white truncate">{user?.name || 'Administrator'}</p>
+            <p className="text-xs text-neutral-400 truncate">{user?.email || 'admin@superiortrends.com'}</p>
           </div>
         </div>
 
         <Link
           to="/"
           onClick={closeSidebar}
-          className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider text-neutral-400 hover:bg-neutral-800 hover:text-white transition-colors"
+          className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-[13px] font-bold uppercase tracking-wider text-neutral-400 hover:bg-neutral-800 hover:text-white transition-colors"
         >
           <ArrowLeft size={16} />
           Back to Store
@@ -125,7 +144,7 @@ export const AdminLayout: React.FC = () => {
         <button
           type="button"
           onClick={handleLogout}
-          className="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider text-neutral-400 hover:bg-neutral-800 hover:text-red-400 transition-colors text-left"
+          className="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-[13px] font-bold uppercase tracking-wider text-neutral-400 hover:bg-neutral-800 hover:text-red-400 transition-colors text-left"
         >
           <LogOut size={16} />
           Log Out
@@ -138,7 +157,7 @@ export const AdminLayout: React.FC = () => {
     return (
       <div className="min-h-screen bg-neutral-50 flex flex-col items-center justify-center gap-3 font-display">
         <Loader2 className="animate-spin text-[#8b1a2a]" size={32} />
-        <p className="text-xs font-bold uppercase tracking-wider text-neutral-500">
+        <p className="text-[13px] font-bold uppercase tracking-wider text-neutral-500">
           {authReady ? 'Redirecting to sign in…' : 'Restoring session…'}
         </p>
       </div>
@@ -146,7 +165,7 @@ export const AdminLayout: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen flex bg-neutral-50 text-neutral-800 overflow-x-hidden">
+    <div className="min-h-screen flex bg-neutral-50 text-neutral-800 overflow-x-clip">
       {/* Mobile overlay */}
       {sidebarOpen && (
         <button
@@ -159,15 +178,15 @@ export const AdminLayout: React.FC = () => {
 
       {/* Sidebar */}
       <aside
-        className={`fixed lg:static inset-y-0 left-0 z-50 w-[min(100%,16rem)] sm:w-64 bg-neutral-900 text-neutral-200 flex flex-col min-h-0 border-r border-neutral-800 shrink-0 transform transition-transform duration-300 ease-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+        className={`fixed inset-y-0 left-0 z-50 w-[min(100%,18rem)] sm:w-72 bg-neutral-900 text-neutral-200 flex flex-col min-h-0 overflow-hidden border-r border-neutral-800 shrink-0 transform transition-transform duration-300 ease-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
           }`}
       >
         <SidebarContent />
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 flex flex-col min-h-screen min-w-0 w-full">
-        <header className="h-14 sm:h-16 bg-white border-b border-neutral-200 flex items-center justify-between px-4 sm:px-6 lg:px-8 shrink-0 gap-3">
+      <main className="flex-1 flex flex-col min-h-screen min-w-0 w-full lg:ml-72">
+        <header className="sticky top-0 z-30 h-14 sm:h-16 bg-white border-b border-neutral-200 flex items-center justify-between px-4 sm:px-6 lg:px-8 shrink-0 gap-3">
           <div className="flex items-center gap-3 min-w-0">
             <button
               type="button"
@@ -177,13 +196,13 @@ export const AdminLayout: React.FC = () => {
             >
               <Menu size={22} />
             </button>
-            <h2 className="text-xs sm:text-sm font-bold uppercase tracking-widest text-neutral-500 truncate">
+            <h2 className="text-[13px] sm:text-[15px] font-bold uppercase tracking-widest text-neutral-500 truncate">
               {navItems.find((item) => item.path === location.pathname)?.label || 'Admin Panel'}
             </h2>
           </div>
           <div className="flex items-center gap-2 shrink-0">
             <span className="inline-block size-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-500 hidden sm:inline">
+            <span className="text-xs font-bold uppercase tracking-wider text-neutral-500 hidden sm:inline">
               Backend Live
             </span>
           </div>

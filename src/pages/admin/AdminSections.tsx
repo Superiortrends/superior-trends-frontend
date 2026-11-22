@@ -175,14 +175,14 @@ export const AdminSections: React.FC = () => {
     return (
       <div className="flex flex-col justify-center items-center h-64 gap-3">
         <Loader2 className="animate-spin text-[#8b1a2a]" size={28} />
-        <p className="text-sm text-neutral-400">Loading sections…</p>
+        <p className="text-[15px] text-neutral-400">Loading sections…</p>
       </div>
     );
   }
 
   /* ── input / label helpers ──────────────────────────────────────────────── */
   const Label = ({ children }: { children: React.ReactNode }) => (
-    <label className="block text-[10px] font-bold uppercase tracking-widest text-neutral-400 mb-1">
+    <label className="block text-xs font-bold uppercase tracking-widest text-neutral-400 mb-1">
       {children}
     </label>
   );
@@ -190,14 +190,14 @@ export const AdminSections: React.FC = () => {
   const Input = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
     <input
       {...props}
-      className={`w-full px-3 py-2.5 text-sm rounded-lg border border-neutral-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#8b1a2a]/20 focus:border-[#8b1a2a] transition-all placeholder:text-neutral-300 ${props.className ?? ''}`}
+      className={`w-full px-3 py-2.5 text-[15px] rounded-lg border border-neutral-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#8b1a2a]/20 focus:border-[#8b1a2a] transition-all placeholder:text-neutral-300 ${props.className ?? ''}`}
     />
   );
 
   const Textarea = (props: React.TextareaHTMLAttributes<HTMLTextAreaElement>) => (
     <textarea
       {...props}
-      className={`w-full px-3 py-2.5 text-sm rounded-lg border border-neutral-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#8b1a2a]/20 focus:border-[#8b1a2a] transition-all placeholder:text-neutral-300 resize-none ${props.className ?? ''}`}
+      className={`w-full px-3 py-2.5 text-[15px] rounded-lg border border-neutral-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#8b1a2a]/20 focus:border-[#8b1a2a] transition-all placeholder:text-neutral-300 resize-none ${props.className ?? ''}`}
     />
   );
 
@@ -213,11 +213,11 @@ export const AdminSections: React.FC = () => {
               <LayoutGrid size={20} className="text-[#8b1a2a]" />
               <h2 className="text-2xl font-bold text-neutral-900 tracking-tight">Homepage Sections</h2>
             </div>
-            <p className="text-sm text-neutral-500">Control which sections appear on the storefront and in what order.</p>
+            <p className="text-[15px] text-neutral-500">Control which sections appear on the storefront and in what order.</p>
           </div>
           <button
             onClick={() => { resetForm(); setIsFormOpen(true); }}
-            className="flex items-center justify-center gap-2 bg-[#8b1a2a] text-white px-5 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider hover:bg-[#6b1420] transition-colors w-full sm:w-auto shrink-0"
+            className="flex items-center justify-center gap-2 bg-[#8b1a2a] text-white px-5 py-2.5 rounded-lg text-[13px] font-bold uppercase tracking-wider hover:bg-[#6b1420] transition-colors w-full sm:w-auto shrink-0"
           >
             <Plus size={16} />
             Add Section
@@ -234,7 +234,7 @@ export const AdminSections: React.FC = () => {
           ].map(({ label, value, color }) => (
             <div key={label} className="bg-white rounded-xl border border-neutral-200 px-4 py-3">
               <div className={`text-2xl font-bold ${color}`}>{value}</div>
-              <div className="text-[11px] text-neutral-400 font-medium mt-0.5">{label}</div>
+              <div className="text-[13px] text-neutral-400 font-medium mt-0.5">{label}</div>
             </div>
           ))}
         </div>
@@ -245,12 +245,12 @@ export const AdminSections: React.FC = () => {
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="border-b border-neutral-100 bg-neutral-50/80">
-                  <th className="px-5 py-3.5 text-[10px] font-bold text-neutral-400 uppercase tracking-widest w-20">Order</th>
-                  <th className="px-5 py-3.5 text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Section</th>
-                  <th className="px-5 py-3.5 text-[10px] font-bold text-neutral-400 uppercase tracking-widest hidden sm:table-cell">Layout</th>
-                  <th className="px-5 py-3.5 text-[10px] font-bold text-neutral-400 uppercase tracking-widest hidden md:table-cell">Items</th>
-                  <th className="px-5 py-3.5 text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Status</th>
-                  <th className="px-5 py-3.5 text-[10px] font-bold text-neutral-400 uppercase tracking-widest text-right">Actions</th>
+                  <th className="px-5 py-3.5 text-xs font-bold text-neutral-400 uppercase tracking-widest w-20">Order</th>
+                  <th className="px-5 py-3.5 text-xs font-bold text-neutral-400 uppercase tracking-widest">Section</th>
+                  <th className="px-5 py-3.5 text-xs font-bold text-neutral-400 uppercase tracking-widest hidden sm:table-cell">Layout</th>
+                  <th className="px-5 py-3.5 text-xs font-bold text-neutral-400 uppercase tracking-widest hidden md:table-cell">Items</th>
+                  <th className="px-5 py-3.5 text-xs font-bold text-neutral-400 uppercase tracking-widest">Status</th>
+                  <th className="px-5 py-3.5 text-xs font-bold text-neutral-400 uppercase tracking-widest text-right">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-neutral-100">
@@ -261,8 +261,8 @@ export const AdminSections: React.FC = () => {
                         <div className="w-12 h-12 rounded-2xl bg-neutral-100 flex items-center justify-center">
                           <LayoutGrid size={20} className="text-neutral-400" />
                         </div>
-                        <p className="text-neutral-400 text-sm font-medium">No sections yet</p>
-                        <p className="text-neutral-300 text-xs">Click "Add Section" to create your first homepage section.</p>
+                        <p className="text-neutral-400 text-[15px] font-medium">No sections yet</p>
+                        <p className="text-neutral-300 text-[13px]">Click "Add Section" to create your first homepage section.</p>
                       </div>
                     </td>
                   </tr>
@@ -272,25 +272,25 @@ export const AdminSections: React.FC = () => {
                       <td className="px-5 py-4">
                         <div className="flex items-center gap-1.5">
                           <GripVertical size={14} className="text-neutral-300 cursor-grab group-hover:text-neutral-500 transition-colors" />
-                          <span className="text-xs font-bold text-neutral-500 tabular-nums">{String(section.sortOrder).padStart(2, '0')}</span>
+                          <span className="text-[13px] font-bold text-neutral-500 tabular-nums">{String(section.sortOrder).padStart(2, '0')}</span>
                         </div>
                       </td>
                       <td className="px-5 py-4">
-                        <p className="font-semibold text-neutral-800 text-sm">{section.title}</p>
-                        <p className="text-[11px] text-neutral-400 mt-0.5 font-mono">/{section.slug}</p>
+                        <p className="font-semibold text-neutral-800 text-[15px]">{section.title}</p>
+                        <p className="text-[13px] text-neutral-400 mt-0.5 font-mono">/{section.slug}</p>
                       </td>
                       <td className="px-5 py-4 hidden sm:table-cell">
-                        <span className={`text-[10px] font-bold px-2 py-1 rounded-md border uppercase tracking-wider ${typeColor[section.type] || 'bg-neutral-50 text-neutral-500 border-neutral-100'}`}>
+                        <span className={`text-xs font-bold px-2 py-1 rounded-md border uppercase tracking-wider ${typeColor[section.type] || 'bg-neutral-50 text-neutral-500 border-neutral-100'}`}>
                           {typeLabel(section.type)}
                         </span>
                       </td>
                       <td className="px-5 py-4 hidden md:table-cell">
-                        <span className="bg-neutral-100 text-neutral-600 px-2.5 py-1 rounded-md text-xs font-semibold">
+                        <span className="bg-neutral-100 text-neutral-600 px-2.5 py-1 rounded-md text-[13px] font-semibold">
                           {section.products?.length ?? 0} items
                         </span>
                       </td>
                       <td className="px-5 py-4">
-                        <span className={`inline-flex items-center gap-1 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest rounded-full ${section.isActive ? 'bg-emerald-50 text-emerald-700' : 'bg-neutral-100 text-neutral-500'}`}>
+                        <span className={`inline-flex items-center gap-1 px-2.5 py-1 text-xs font-bold uppercase tracking-widest rounded-full ${section.isActive ? 'bg-emerald-50 text-emerald-700' : 'bg-neutral-100 text-neutral-500'}`}>
                           <span className={`w-1.5 h-1.5 rounded-full ${section.isActive ? 'bg-emerald-500' : 'bg-neutral-400'}`} />
                           {section.isActive ? 'Live' : 'Hidden'}
                         </span>
@@ -344,7 +344,7 @@ export const AdminSections: React.FC = () => {
                 <h3 className="text-lg font-bold text-neutral-900">
                   {editingSection ? 'Edit Section' : 'New Section'}
                 </h3>
-                <p className="text-xs text-neutral-400 mt-0.5">
+                <p className="text-[13px] text-neutral-400 mt-0.5">
                   {editingSection ? `Editing "${editingSection.title}"` : 'Add a section to the homepage'}
                 </p>
               </div>
@@ -381,7 +381,7 @@ export const AdminSections: React.FC = () => {
                         value={sortOrder}
                         onChange={e => setSortOrder(Number(e.target.value))}
                       />
-                      <p className="text-[10px] text-neutral-400 mt-1">0 = first after Hero</p>
+                      <p className="text-xs text-neutral-400 mt-1">0 = first after Hero</p>
                     </div>
                   </div>
 
@@ -393,14 +393,14 @@ export const AdminSections: React.FC = () => {
                           key={opt.value}
                           type="button"
                           onClick={() => setType(opt.value)}
-                          className={`text-left px-3 py-3 rounded-xl border text-xs font-semibold transition-all ${
+                          className={`text-left px-3 py-3 rounded-xl border text-[13px] font-semibold transition-all ${
                             type === opt.value
                               ? 'border-[#8b1a2a] bg-[#8b1a2a]/5 text-[#8b1a2a]'
                               : 'border-neutral-200 text-neutral-600 hover:border-neutral-300 bg-white'
                           }`}
                         >
-                          <div className="font-bold text-[11px]">{opt.label}</div>
-                          <div className={`text-[10px] mt-0.5 font-normal ${type === opt.value ? 'text-[#8b1a2a]/70' : 'text-neutral-400'}`}>
+                          <div className="font-bold text-[13px]">{opt.label}</div>
+                          <div className={`text-xs mt-0.5 font-normal ${type === opt.value ? 'text-[#8b1a2a]/70' : 'text-neutral-400'}`}>
                             {opt.desc}
                           </div>
                         </button>
@@ -414,8 +414,8 @@ export const AdminSections: React.FC = () => {
                       <input type="checkbox" checked={isActive} onChange={e => setIsActive(e.target.checked)} className="sr-only" />
                     </div>
                     <div>
-                      <div className="text-sm font-semibold text-neutral-800">Show on homepage</div>
-                      <div className="text-[11px] text-neutral-400">{isActive ? 'Section is live and visible to customers' : 'Section is hidden from the storefront'}</div>
+                      <div className="text-[15px] font-semibold text-neutral-800">Show on homepage</div>
+                      <div className="text-[13px] text-neutral-400">{isActive ? 'Section is live and visible to customers' : 'Section is hidden from the storefront'}</div>
                     </div>
                   </label>
                 </section>
@@ -424,15 +424,15 @@ export const AdminSections: React.FC = () => {
                 {type === 'SPLIT' && (
                   <section className="space-y-4">
                     <div className="flex items-center gap-2 pb-2 border-b border-neutral-100">
-                      <span className="text-xs font-bold text-neutral-800">Split Layout Configuration</span>
-                      <span className="text-[10px] text-neutral-400">Two promo boxes side by side</span>
+                      <span className="text-[13px] font-bold text-neutral-800">Split Layout Configuration</span>
+                      <span className="text-xs text-neutral-400">Two promo boxes side by side</span>
                     </div>
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                       {/* Left */}
                       <div className="space-y-3 p-4 bg-neutral-50 rounded-xl border border-neutral-200">
                         <div className="flex items-center gap-2 mb-1">
                           <div className="w-2.5 h-2.5 rounded-full bg-[#8b1a2a]" />
-                          <h4 className="text-xs font-bold text-neutral-700 uppercase tracking-wider">Left box</h4>
+                          <h4 className="text-[13px] font-bold text-neutral-700 uppercase tracking-wider">Left box</h4>
                         </div>
                         <div><Label>Subtitle / tagline</Label><Input type="text" placeholder="Ethnic Collection" value={subtitle} onChange={e => setSubtitle(e.target.value)} /></div>
                         <div><Label>Description</Label><Textarea placeholder="Short description…" value={description} onChange={e => setDescription(e.target.value)} rows={2} /></div>
@@ -444,7 +444,7 @@ export const AdminSections: React.FC = () => {
                           {bannerImage && <img src={bannerImage} alt="" className="w-full h-28 object-cover rounded-lg mb-2 border border-neutral-200" />}
                           <label className="flex items-center justify-center gap-2 w-full py-3 border-2 border-dashed border-neutral-300 rounded-xl cursor-pointer hover:border-[#8b1a2a] bg-white transition-colors">
                             {isUploadingBanner ? <Loader2 className="animate-spin text-[#8b1a2a]" size={16} /> : null}
-                            <span className="text-xs font-semibold text-neutral-600">{isUploadingBanner ? 'Uploading…' : bannerImage ? 'Change image' : 'Upload left banner'}</span>
+                            <span className="text-[13px] font-semibold text-neutral-600">{isUploadingBanner ? 'Uploading…' : bannerImage ? 'Change image' : 'Upload left banner'}</span>
                             <input type="file" accept="image/*" className="sr-only" onChange={async e => {
                               const file = e.target.files?.[0]; if (!file) return;
                               setIsUploadingBanner(true);
@@ -459,7 +459,7 @@ export const AdminSections: React.FC = () => {
                       <div className="space-y-3 p-4 bg-neutral-50 rounded-xl border border-neutral-200">
                         <div className="flex items-center gap-2 mb-1">
                           <div className="w-2.5 h-2.5 rounded-full bg-[#9c8485]" />
-                          <h4 className="text-xs font-bold text-neutral-700 uppercase tracking-wider">Right box</h4>
+                          <h4 className="text-[13px] font-bold text-neutral-700 uppercase tracking-wider">Right box</h4>
                         </div>
                         <div><Label>Subtitle / tagline</Label><Input type="text" placeholder="Western Trend" value={subtitleRight} onChange={e => setSubtitleRight(e.target.value)} /></div>
                         <div><Label>Headline</Label><Input type="text" placeholder="Cord Sets & Dresses" value={titleRight} onChange={e => setTitleRight(e.target.value)} /></div>
@@ -472,7 +472,7 @@ export const AdminSections: React.FC = () => {
                           {bannerImageRight && <img src={bannerImageRight} alt="" className="w-full h-28 object-cover rounded-lg mb-2 border border-neutral-200" />}
                           <label className="flex items-center justify-center gap-2 w-full py-3 border-2 border-dashed border-neutral-300 rounded-xl cursor-pointer hover:border-[#8b1a2a] bg-white transition-colors">
                             {isUploadingBannerRight ? <Loader2 className="animate-spin text-[#8b1a2a]" size={16} /> : null}
-                            <span className="text-xs font-semibold text-neutral-600">{isUploadingBannerRight ? 'Uploading…' : bannerImageRight ? 'Change image' : 'Upload right banner'}</span>
+                            <span className="text-[13px] font-semibold text-neutral-600">{isUploadingBannerRight ? 'Uploading…' : bannerImageRight ? 'Change image' : 'Upload right banner'}</span>
                             <input type="file" accept="image/*" className="sr-only" onChange={async e => {
                               const file = e.target.files?.[0]; if (!file) return;
                               setIsUploadingBannerRight(true);
@@ -495,10 +495,10 @@ export const AdminSections: React.FC = () => {
                         {type === 'SPLIT' ? 'Products (optional, max 2)' : 'Select products'}
                         {type === 'DEPARTMENTS' && ' — pick 3 for best layout'}
                       </Label>
-                      <p className="text-[10px] text-neutral-400 mt-0.5">Selection order = left-to-right display order.</p>
+                      <p className="text-xs text-neutral-400 mt-0.5">Selection order = left-to-right display order.</p>
                     </div>
                     {selectedProductIds.length > 0 && (
-                      <span className="text-[10px] font-bold text-[#8b1a2a] bg-[#8b1a2a]/10 px-2 py-1 rounded-md">
+                      <span className="text-xs font-bold text-[#8b1a2a] bg-[#8b1a2a]/10 px-2 py-1 rounded-md">
                         {selectedProductIds.length} selected
                       </span>
                     )}
@@ -520,8 +520,8 @@ export const AdminSections: React.FC = () => {
                               {isSelected && <svg viewBox="0 0 10 8" fill="none" className="w-2.5 h-2.5"><path d="M1 4l2.5 2.5L9 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>}
                             </div>
                             <div className="min-w-0">
-                              <p className="text-xs font-semibold text-neutral-800 truncate">{product.name}</p>
-                              <p className="text-[10px] text-neutral-400 truncate capitalize">{product.category}</p>
+                              <p className="text-[13px] font-semibold text-neutral-800 truncate">{product.name}</p>
+                              <p className="text-xs text-neutral-400 truncate capitalize">{product.category}</p>
                             </div>
                           </div>
                         );
@@ -530,14 +530,14 @@ export const AdminSections: React.FC = () => {
 
                     {selectedProductIds.length > 0 && (
                       <div className="border-t border-neutral-200 p-3 space-y-1.5">
-                        <p className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest mb-2">Display order</p>
+                        <p className="text-xs font-bold text-neutral-500 uppercase tracking-widest mb-2">Display order</p>
                         {selectedProductIds.map((pid, index) => {
                           const product = allProducts?.find((p: any) => p.id === pid);
                           if (!product) return null;
                           return (
                             <div key={pid} className="flex items-center gap-2 bg-white border border-neutral-200 rounded-lg px-3 py-2 group/row">
-                              <span className="text-[10px] font-bold text-neutral-400 tabular-nums w-5">{index + 1}</span>
-                              <span className="text-xs font-medium text-neutral-800 flex-1 truncate">{product.name}</span>
+                              <span className="text-xs font-bold text-neutral-400 tabular-nums w-5">{index + 1}</span>
+                              <span className="text-[13px] font-medium text-neutral-800 flex-1 truncate">{product.name}</span>
                               <div className="flex gap-0.5 shrink-0 opacity-0 group-hover/row:opacity-100 transition-opacity">
                                 <button type="button" onClick={() => moveProduct(pid, 'up')} disabled={index === 0} className="p-1 rounded text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 disabled:opacity-30 transition-colors"><ChevronUp size={13} /></button>
                                 <button type="button" onClick={() => moveProduct(pid, 'down')} disabled={index === selectedProductIds.length - 1} className="p-1 rounded text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 disabled:opacity-30 transition-colors"><ChevronDown size={13} /></button>
@@ -553,21 +553,21 @@ export const AdminSections: React.FC = () => {
 
               {/* sticky footer */}
               <div className="flex justify-between items-center gap-3 px-6 py-4 border-t border-neutral-100 bg-white shrink-0">
-                <div className="text-xs text-neutral-400 hidden sm:block">
+                <div className="text-[13px] text-neutral-400 hidden sm:block">
                   {editingSection ? `ID: ${editingSection.id.slice(0, 8)}…` : 'New section'}
                 </div>
                 <div className="flex gap-3 ml-auto">
                   <button
                     type="button"
                     onClick={resetForm}
-                    className="px-5 py-2.5 text-sm font-semibold text-neutral-600 bg-neutral-100 hover:bg-neutral-200 rounded-xl transition-colors"
+                    className="px-5 py-2.5 text-[15px] font-semibold text-neutral-600 bg-neutral-100 hover:bg-neutral-200 rounded-xl transition-colors"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={createMutation.isPending || updateMutation.isPending}
-                    className="px-5 py-2.5 text-sm font-semibold text-white bg-[#8b1a2a] hover:bg-[#7a1725] rounded-xl transition-colors flex items-center gap-2 disabled:opacity-70 shadow-sm shadow-[#8b1a2a]/30 active:scale-95"
+                    className="px-5 py-2.5 text-[15px] font-semibold text-white bg-[#8b1a2a] hover:bg-[#7a1725] rounded-xl transition-colors flex items-center gap-2 disabled:opacity-70 shadow-sm shadow-[#8b1a2a]/30 active:scale-95"
                   >
                     {(createMutation.isPending || updateMutation.isPending) && (
                       <Loader2 className="animate-spin" size={15} />

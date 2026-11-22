@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { CheckCircle2, XCircle, Loader2, ArrowLeft } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
-import { verifyThawaniPayment, verifyThawaniPaymentIntent } from '../lib/api';
+import { verifyThawaniPayment, verifyThawaniPaymentIntent, cancelThawaniPayment } from '../lib/api';
 import { useToast } from '../hooks/useToast';
 import { useLanguage } from '../context/LanguageContext';
 import { motion } from 'framer-motion';
@@ -32,6 +32,8 @@ export const PaymentCallback: React.FC = () => {
       }
 
       if (status === 'cancel') {
+        // Release the held stock / cancel the unpaid order (server double-checks with Thawani first)
+        cancelThawaniPayment(orderId).catch(() => { /* the background sweep will clean it up */ });
         setLoading(false);
         setSuccess(false);
         setErrorMessage(language === 'ar' ? 'تم إلغاء عملية الدفع من قبل المستخدم.' : 'Payment was cancelled by the user.');

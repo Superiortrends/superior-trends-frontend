@@ -118,7 +118,7 @@ export const AdminBanners: React.FC = () => {
     return (
       <div className="py-24 flex flex-col items-center justify-center gap-3">
         <Loader2 className="animate-spin text-[#8b1a2a]" size={28} />
-        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400">
+        <p className="text-xs font-bold uppercase tracking-[0.2em] text-neutral-400">
           Loading Banners…
         </p>
       </div>
@@ -131,8 +131,8 @@ export const AdminBanners: React.FC = () => {
         <div className="size-12 rounded-full bg-red-50 flex items-center justify-center">
           <AlertCircle className="text-red-500" size={20} />
         </div>
-        <p className="text-sm font-bold text-neutral-800">Unable to load banners</p>
-        <p className="text-xs text-neutral-400 max-w-xs">
+        <p className="text-[15px] font-bold text-neutral-800">Unable to load banners</p>
+        <p className="text-[13px] text-neutral-400 max-w-xs">
           The backend may be unreachable. Check your connection and try refreshing.
         </p>
       </div>
@@ -145,20 +145,20 @@ export const AdminBanners: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-[#8b1a2a]">Admin</span>
+            <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#8b1a2a]">Admin</span>
             <ChevronRight size={10} className="text-neutral-300" />
-            <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-neutral-400">Configuration</span>
+            <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-neutral-400">Configuration</span>
           </div>
           <h1 className="text-3xl font-extrabold text-neutral-900 tracking-tight leading-none">
             Homepage Banners
           </h1>
-          <p className="text-xs text-neutral-400 mt-2 leading-relaxed">
+          <p className="text-[13px] text-neutral-400 mt-2 leading-relaxed">
             Manage the hero slideshow images on the storefront homepage. Upload, edit title, links, and toggle active status.
           </p>
         </div>
         <button
           onClick={() => { resetForm(); setIsFormOpen(true); }}
-          className="flex items-center justify-center gap-2 bg-[#8b1a2a] text-white px-5 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider hover:bg-[#6b1420] transition-colors w-full sm:w-auto shrink-0"
+          className="flex items-center justify-center gap-2 bg-[#8b1a2a] text-white px-5 py-2.5 rounded-lg text-[13px] font-bold uppercase tracking-wider hover:bg-[#6b1420] transition-colors w-full sm:w-auto shrink-0"
         >
           <Plus size={14} />
           Add Banner
@@ -169,7 +169,7 @@ export const AdminBanners: React.FC = () => {
       {successMsg && (
         <div className="flex items-center gap-3 px-4 py-3 bg-emerald-50 border border-emerald-200 rounded-xl">
           <CheckCircle2 size={14} className="text-emerald-600 shrink-0" />
-          <span className="text-xs font-semibold text-emerald-800">{successMsg}</span>
+          <span className="text-[13px] font-semibold text-emerald-800">{successMsg}</span>
         </div>
       )}
 
@@ -182,7 +182,7 @@ export const AdminBanners: React.FC = () => {
         ].map(({ label, value, color }) => (
           <div key={label} className="bg-white rounded-xl border border-neutral-200 px-4 py-3">
             <div className={`text-2xl font-black ${color}`}>{value}</div>
-            <div className="text-[9px] text-neutral-400 uppercase tracking-wider font-semibold mt-0.5">{label}</div>
+            <div className="text-[11px] text-neutral-400 uppercase tracking-wider font-semibold mt-0.5">{label}</div>
           </div>
         ))}
       </div>
@@ -195,8 +195,8 @@ export const AdminBanners: React.FC = () => {
               <div className="w-12 h-12 rounded-2xl bg-neutral-100 flex items-center justify-center">
                 <ImageIcon size={20} className="text-neutral-400" />
               </div>
-              <p className="text-neutral-400 text-sm font-semibold">No banners uploaded yet</p>
-              <p className="text-neutral-300 text-xs max-w-xs px-4">
+              <p className="text-neutral-400 text-[15px] font-semibold">No banners uploaded yet</p>
+              <p className="text-neutral-300 text-[13px] max-w-xs px-4">
                 Click "Add Banner" to upload and display custom banner images in the homepage hero slider.
               </p>
             </div>
@@ -216,7 +216,7 @@ export const AdminBanners: React.FC = () => {
                 />
                 {/* Active Status Badge */}
                 <div className="absolute top-3 left-3 z-10">
-                  <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider rounded-full shadow-sm ${banner.active
+                  <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider rounded-full shadow-sm ${banner.active
                     ? 'bg-emerald-500 text-white'
                     : 'bg-neutral-800/80 text-white'
                     }`}>
@@ -229,10 +229,10 @@ export const AdminBanners: React.FC = () => {
               {/* Body details */}
               <div className="p-4 flex-grow flex flex-col justify-between">
                 <div>
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-neutral-800 truncate">
+                  <h3 className="text-[13px] font-bold uppercase tracking-wider text-neutral-800 truncate">
                     Banner Slide
                   </h3>
-                  <p className="text-[10px] text-neutral-400 mt-1 leading-relaxed">
+                  <p className="text-xs text-neutral-400 mt-1 leading-relaxed">
                     Image ID: {banner.id.slice(0, 8)}
                   </p>
                 </div>
@@ -242,7 +242,7 @@ export const AdminBanners: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => handleToggleActive(banner)}
-                    className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-colors ${banner.active
+                    className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors ${banner.active
                       ? 'text-neutral-500 hover:bg-neutral-100 hover:text-neutral-800'
                       : 'text-[#8b1a2a] hover:bg-[#8b1a2a]/8 hover:text-[#8b1a2a]'
                       }`}
@@ -306,10 +306,10 @@ export const AdminBanners: React.FC = () => {
             {/* header */}
             <div className="flex items-center justify-between px-6 py-5 border-b border-neutral-100 shrink-0">
               <div>
-                <h3 className="text-base font-bold text-neutral-900 uppercase tracking-tight">
+                <h3 className="text-[17px] font-bold text-neutral-900 uppercase tracking-tight">
                   {editingBanner ? 'Edit Banner Image' : 'Add New Banner'}
                 </h3>
-                <p className="text-[10px] text-neutral-400 mt-0.5">
+                <p className="text-xs text-neutral-400 mt-0.5">
                   {editingBanner ? 'Update link, text or toggle status' : 'Upload a high resolution banner for the hero carousel'}
                 </p>
               </div>
@@ -326,7 +326,7 @@ export const AdminBanners: React.FC = () => {
               <div className="flex-1 overflow-y-auto overscroll-contain px-6 py-5 space-y-4">
                 {/* Upload Image Section */}
                 <div>
-                  <label className="block text-[9px] font-bold uppercase tracking-[0.18em] text-neutral-400 mb-2">
+                  <label className="block text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-400 mb-2">
                     Banner Image (Required)
                   </label>
                   {imageUrl ? (
@@ -347,10 +347,10 @@ export const AdminBanners: React.FC = () => {
                       ) : (
                         <ImageIcon className="text-neutral-400" size={24} />
                       )}
-                      <span className="text-xs font-semibold text-neutral-600">
+                      <span className="text-[13px] font-semibold text-neutral-600">
                         {isUploading ? 'Uploading Image…' : 'Click to Upload Banner Image'}
                       </span>
-                      <span className="text-[9px] text-neutral-400">Recommended size: 1920x820 pixels</span>
+                      <span className="text-[11px] text-neutral-400">Recommended size: 1920x820 pixels</span>
                       <input type="file" accept="image/*" className="sr-only" onChange={handleImageUpload} disabled={isUploading} />
                     </label>
                   )}
@@ -365,8 +365,8 @@ export const AdminBanners: React.FC = () => {
                     <input type="checkbox" checked={active} onChange={e => setActive(e.target.checked)} className="sr-only" />
                   </div>
                   <div>
-                    <div className="text-xs font-bold text-neutral-800 uppercase tracking-wider">Show immediately</div>
-                    <div className="text-[10px] text-neutral-400 mt-0.5">Activate banner and include in home hero slide rotations.</div>
+                    <div className="text-[13px] font-bold text-neutral-800 uppercase tracking-wider">Show immediately</div>
+                    <div className="text-xs text-neutral-400 mt-0.5">Activate banner and include in home hero slide rotations.</div>
                   </div>
                 </label>
               </div>
@@ -376,14 +376,14 @@ export const AdminBanners: React.FC = () => {
                 <button
                   type="button"
                   onClick={resetForm}
-                  className="px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-neutral-600 bg-neutral-100 hover:bg-neutral-200 rounded-xl transition-colors ml-auto"
+                  className="px-5 py-2.5 text-[13px] font-bold uppercase tracking-wider text-neutral-600 bg-neutral-100 hover:bg-neutral-200 rounded-xl transition-colors ml-auto"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isUploading || createMutation.isPending || updateMutation.isPending}
-                  className="px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white bg-[#8b1a2a] hover:bg-[#7a1725] rounded-xl transition-colors flex items-center gap-2 disabled:opacity-70 shadow-sm shadow-[#8b1a2a]/30 active:scale-95"
+                  className="px-5 py-2.5 text-[13px] font-bold uppercase tracking-wider text-white bg-[#8b1a2a] hover:bg-[#7a1725] rounded-xl transition-colors flex items-center gap-2 disabled:opacity-70 shadow-sm shadow-[#8b1a2a]/30 active:scale-95"
                 >
                   {(createMutation.isPending || updateMutation.isPending) && (
                     <Loader2 className="animate-spin" size={13} />

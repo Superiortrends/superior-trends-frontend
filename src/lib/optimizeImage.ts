@@ -35,6 +35,11 @@ export function optimizeImageUrl(src: string | undefined, width = 480): string |
       url.searchParams.set('fit', 'crop');
       return url.toString();
     }
+    if (url.hostname === 'ik.imagekit.io') {
+      if (url.searchParams.has('tr')) return absolute;
+      url.searchParams.set('tr', `w-${width},q-80,f-auto`);
+      return url.toString();
+    }
     if (url.hostname.includes('cloudinary.com') && url.pathname.includes('/upload/')) {
       if (/\/upload\/[^/]*w_\d+/.test(url.pathname)) {
         return absolute;

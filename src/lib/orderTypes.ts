@@ -24,8 +24,8 @@ export interface OrderPaymentRow {
   id: string;
   paymentMethod: string;
   paymentStatus: string;
-  razorpayPaymentId?: string | null;
-  razorpayOrderId?: string | null;
+  thawaniPaymentId?: string | null;
+  thawaniSessionId?: string | null;
   amount: number | string;
 }
 

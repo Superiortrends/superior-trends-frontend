@@ -61,14 +61,14 @@ export const AdminDashboard: React.FC = () => {
       {/* ── Masthead ── */}
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2 pb-6 border-b border-[#e8e2db]">
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8b1a2a] mb-1">
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#8b1a2a] mb-1">
             Admin Console
           </p>
           <h1 className="text-3xl sm:text-4xl font-black text-[#1a1a1a] uppercase tracking-tight leading-none">
             Dashboard
           </h1>
         </div>
-        <p className="text-xs text-[#9a8f87] font-medium tabular-nums">
+        <p className="text-[13px] text-[#9a8f87] font-medium tabular-nums">
           {new Date().toLocaleDateString("en-IN", {
             weekday: "long",
             day: "numeric",
@@ -79,7 +79,7 @@ export const AdminDashboard: React.FC = () => {
       </div>
 
       {isError && (
-        <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-medium">
+        <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-[13px] font-medium">
           <AlertTriangle size={14} />
           Could not load live stats — start the backend and refresh.
         </div>
@@ -87,7 +87,7 @@ export const AdminDashboard: React.FC = () => {
 
       {/* ── Row 1: primary stats ── */}
       <section className="space-y-2">
-        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#9a8f87]">
+        <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#9a8f87]">
           Catalog Overview
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 w-full">
@@ -136,7 +136,7 @@ export const AdminDashboard: React.FC = () => {
 
       {/* ── Row 2: business stats ── */}
       <section className="space-y-2">
-        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#9a8f87]">
+        <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#9a8f87]">
           Inventory & Revenue
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full">
@@ -174,7 +174,7 @@ export const AdminDashboard: React.FC = () => {
 
         {/* Quick actions — 2 cols */}
         <div className="lg:col-span-2 space-y-2">
-          <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#9a8f87]">
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#9a8f87]">
             Quick Actions
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2 h-fit">
@@ -189,10 +189,10 @@ export const AdminDashboard: React.FC = () => {
                     {action.icon}
                   </div>
                   <div className="min-w-0">
-                    <p className="text-xs font-black uppercase tracking-wider text-[#1a1a1a] truncate">
+                    <p className="text-[13px] font-black uppercase tracking-wider text-[#1a1a1a] truncate">
                       {action.title}
                     </p>
-                    <p className="text-[10px] text-[#9a8f87] font-medium mt-0.5 truncate">
+                    <p className="text-xs text-[#9a8f87] font-medium mt-0.5 truncate">
                       {action.desc}
                     </p>
                   </div>
@@ -209,28 +209,28 @@ export const AdminDashboard: React.FC = () => {
         {/* Recent products — 3 cols */}
         <div className="lg:col-span-3 space-y-2">
           <div className="flex items-center justify-between">
-            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#9a8f87]">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#9a8f87]">
               Recent Products
             </p>
             <Link
               to="/admin/products"
-              className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-[#8b1a2a] hover:underline"
+              className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-widest text-[#8b1a2a] hover:underline"
             >
               View all <ArrowRight size={10} />
             </Link>
           </div>
 
           <div className="rounded-2xl border border-[#e8e2db] bg-white overflow-hidden">
-            <table className="w-full text-left text-sm">
+            <table className="w-full text-left text-[15px]">
               <thead>
                 <tr className="border-b border-[#e8e2db] bg-[#f0ece6]/50">
-                  <th className="px-4 py-3 text-[10px] font-bold uppercase tracking-[0.15em] text-[#9a8f87]">
+                  <th className="px-4 py-3 text-xs font-bold uppercase tracking-[0.15em] text-[#9a8f87]">
                     Product
                   </th>
-                  <th className="px-4 py-3 text-[10px] font-bold uppercase tracking-[0.15em] text-[#9a8f87] hidden sm:table-cell">
+                  <th className="px-4 py-3 text-xs font-bold uppercase tracking-[0.15em] text-[#9a8f87] hidden sm:table-cell">
                     SKU
                   </th>
-                  <th className="px-4 py-3 text-[10px] font-bold uppercase tracking-[0.15em] text-[#9a8f87] text-right">
+                  <th className="px-4 py-3 text-xs font-bold uppercase tracking-[0.15em] text-[#9a8f87] text-right">
                     Price
                   </th>
                 </tr>
@@ -248,17 +248,17 @@ export const AdminDashboard: React.FC = () => {
                       className="hover:bg-[#faf9f7] transition-colors duration-100"
                     >
                       <td className="px-4 py-3.5">
-                        <span className="text-xs font-semibold text-[#1a1a1a] line-clamp-1">
+                        <span className="text-[13px] font-semibold text-[#1a1a1a] line-clamp-1">
                           {p.name}
                         </span>
                       </td>
                       <td className="px-4 py-3.5 hidden sm:table-cell">
-                        <span className="text-[11px] font-mono text-[#9a8f87] bg-[#f0ece6] px-2 py-0.5 rounded-md">
+                        <span className="text-[13px] font-mono text-[#9a8f87] bg-[#f0ece6] px-2 py-0.5 rounded-md">
                           {p.sku || "—"}
                         </span>
                       </td>
                       <td className="px-4 py-3.5 text-right">
-                        <span className="text-xs font-black text-[#8b1a2a]">
+                        <span className="text-[13px] font-black text-[#8b1a2a]">
                           {formatINR(Number(p.salePrice))}
                         </span>
                       </td>
@@ -273,15 +273,15 @@ export const AdminDashboard: React.FC = () => {
                 <div className="size-10 rounded-full bg-[#f0ece6] flex items-center justify-center mb-3">
                   <ShoppingBag size={18} className="text-[#9a8f87]" />
                 </div>
-                <p className="text-sm font-semibold text-[#1a1a1a]">
+                <p className="text-[15px] font-semibold text-[#1a1a1a]">
                   No products yet
                 </p>
-                <p className="text-xs text-[#9a8f87] mt-1">
+                <p className="text-[13px] text-[#9a8f87] mt-1">
                   Add your first product to see it here.
                 </p>
                 <Link
                   to="/admin/products"
-                  className="mt-4 inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-[#8b1a2a] hover:underline"
+                  className="mt-4 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-[#8b1a2a] hover:underline"
                 >
                   <Plus size={11} /> Add Product
                 </Link>

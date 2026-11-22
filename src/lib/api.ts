@@ -306,6 +306,11 @@ export const payWithSavedCard = async (orderId: string, cardId: string) => {
   return data.data as { paymentIntentId: string; succeeded: boolean; otpUrl: string | null };
 };
 
+/** Tell the server the customer left/cancelled the Thawani page so an unpaid order is cancelled and stock released. */
+export const cancelThawaniPayment = async (orderId: string) => {
+  const { data } = await api.post('/payment/thawani/cancel', { orderId });
+  return data.data as { result: string };
+};
 export const verifyThawaniPaymentIntent = async (orderId: string) => {
   const { data } = await api.post('/payment/thawani/verify-card-payment', { orderId });
   return data.data as { order: OrderRow | null };
@@ -411,6 +416,7 @@ export interface SystemSettings {
   cod_allowed: string;
   free_shipping_threshold: string;
   shipping_charge: string;
+  estimated_delivery_days: string;
 }
 
 export const getSettings = async () => {

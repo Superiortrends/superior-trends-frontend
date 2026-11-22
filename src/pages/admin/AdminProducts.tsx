@@ -257,14 +257,14 @@ export const AdminProducts: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <div className="min-w-0">
           <h1 className="font-display text-2xl sm:text-3xl font-extrabold text-neutral-900 uppercase">Products Catalog</h1>
-          <p className="text-xs text-neutral-500 mt-1">Manage, update, and deploy clothing items instantly.</p>
+          <p className="text-[13px] text-neutral-500 mt-1">Manage, update, and deploy clothing items instantly.</p>
         </div>
         <button
           onClick={() => {
             resetForm();
             setIsFormOpen(true);
           }}
-          className="flex items-center justify-center gap-2 bg-[#8b1a2a] text-white px-5 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider hover:bg-[#6b1420] transition-colors w-full sm:w-auto shrink-0"
+          className="flex items-center justify-center gap-2 bg-[#8b1a2a] text-white px-5 py-2.5 rounded-lg text-[13px] font-bold uppercase tracking-wider hover:bg-[#6b1420] transition-colors w-full sm:w-auto shrink-0"
         >
           <Plus size={16} />
           Add Product
@@ -286,53 +286,53 @@ export const AdminProducts: React.FC = () => {
               <div data-lenis-prevent className="p-6 flex-1 min-h-0 overflow-y-auto overscroll-contain space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">Product Name</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-neutral-400">Product Name</label>
                   <input
                     type="text"
                     required
                     placeholder="Classic Trench Coat"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full px-4 py-2.5 text-sm rounded-lg border border-neutral-200 focus:outline-none focus:border-[#8b1a2a]"
+                    className="w-full px-4 py-2.5 text-[15px] rounded-lg border border-neutral-200 focus:outline-none focus:border-[#8b1a2a]"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">SKU Code</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-neutral-400">SKU Code</label>
                   <input
                     type="text"
                     required
                     placeholder="COAT-TRENCH-BLK"
                     value={sku}
                     onChange={(e) => setSku(e.target.value)}
-                    className="w-full px-4 py-2.5 text-sm rounded-lg border border-neutral-200 focus:outline-none focus:border-[#8b1a2a]"
+                    className="w-full px-4 py-2.5 text-[15px] rounded-lg border border-neutral-200 focus:outline-none focus:border-[#8b1a2a]"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">MRP (OMR)</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-neutral-400">MRP (OMR)</label>
                   <input
                     type="number"
                     required
                     value={mrp}
                     onChange={(e) => setMrp(Number(e.target.value))}
-                    className="w-full px-4 py-2.5 text-sm rounded-lg border border-neutral-200 focus:outline-none focus:border-[#8b1a2a]"
+                    className="w-full px-4 py-2.5 text-[15px] rounded-lg border border-neutral-200 focus:outline-none focus:border-[#8b1a2a]"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">Sale Price (OMR)</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-neutral-400">Sale Price (OMR)</label>
                   <input
                     type="number"
                     required
                     value={salePrice}
                     onChange={(e) => setSalePrice(Number(e.target.value))}
-                    className="w-full px-4 py-2.5 text-sm rounded-lg border border-neutral-200 focus:outline-none focus:border-[#8b1a2a]"
+                    className="w-full px-4 py-2.5 text-[15px] rounded-lg border border-neutral-200 focus:outline-none focus:border-[#8b1a2a]"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">
+                  <label className="text-xs font-bold uppercase tracking-wider text-neutral-400">
                     Main category
                   </label>
                   <select
@@ -342,7 +342,7 @@ export const AdminProducts: React.FC = () => {
                       setParentCategoryId(e.target.value);
                       setSubCategoryName('');
                     }}
-                    className="w-full px-4 py-2.5 text-sm rounded-lg border border-neutral-200 focus:outline-none focus:border-[#8b1a2a] bg-white font-display"
+                    className="w-full px-4 py-2.5 text-[15px] rounded-lg border border-neutral-200 focus:outline-none focus:border-[#8b1a2a] bg-white font-display"
                   >
                     <option value="">— Select (e.g. Men, Women) —</option>
                     {rootCategories.map((cat) => (
@@ -351,13 +351,13 @@ export const AdminProducts: React.FC = () => {
                       </option>
                     ))}
                   </select>
-                  <p className="text-[10px] text-neutral-400">
+                  <p className="text-xs text-neutral-400">
                     Create main categories in Admin → Categories (leave parent empty).
                   </p>
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">
+                  <label className="text-xs font-bold uppercase tracking-wider text-neutral-400">
                     Subcategory
                   </label>
                   <input
@@ -367,7 +367,7 @@ export const AdminProducts: React.FC = () => {
                     placeholder="e.g. Jeans, Tops, Kurtas"
                     value={subCategoryName}
                     onChange={(e) => setSubCategoryName(e.target.value)}
-                    className="w-full px-4 py-2.5 text-sm rounded-lg border border-neutral-200 focus:outline-none focus:border-[#8b1a2a] font-display"
+                    className="w-full px-4 py-2.5 text-[15px] rounded-lg border border-neutral-200 focus:outline-none focus:border-[#8b1a2a] font-display"
                   />
                   <datalist id="subcategory-suggestions">
                     {(flatCategories ?? [])
@@ -376,17 +376,17 @@ export const AdminProducts: React.FC = () => {
                         <option key={c.id} value={c.name} />
                       ))}
                   </datalist>
-                  <p className="text-[10px] text-neutral-400">
+                  <p className="text-xs text-neutral-400">
                     Type a subcategory under the main category — e.g. Men → Jeans. Created automatically if new.
                   </p>
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">Collection</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-neutral-400">Collection</label>
                   <select
                     value={collectionId}
                     onChange={(e) => setCollectionId(e.target.value)}
-                    className="w-full px-4 py-2.5 text-sm rounded-lg border border-neutral-200 focus:outline-none focus:border-[#8b1a2a] bg-white"
+                    className="w-full px-4 py-2.5 text-[15px] rounded-lg border border-neutral-200 focus:outline-none focus:border-[#8b1a2a] bg-white"
                   >
                     <option value="">Select a Collection</option>
                     {collections?.map((col: any) => (
@@ -396,18 +396,18 @@ export const AdminProducts: React.FC = () => {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">Brand</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-neutral-400">Brand</label>
                   <input
                     type="text"
                     placeholder="Superior Trends"
                     value={brand}
                     onChange={(e) => setBrand(e.target.value)}
-                    className="w-full px-4 py-2.5 text-sm rounded-lg border border-neutral-200 focus:outline-none focus:border-[#8b1a2a]"
+                    className="w-full px-4 py-2.5 text-[15px] rounded-lg border border-neutral-200 focus:outline-none focus:border-[#8b1a2a]"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">Weight (kg)</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-neutral-400">Weight (kg)</label>
                   <input
                     type="number"
                     min={0}
@@ -415,23 +415,23 @@ export const AdminProducts: React.FC = () => {
                     placeholder="0.25"
                     value={weight}
                     onChange={(e) => setWeight(e.target.value === '' ? '' : Number(e.target.value))}
-                    className="w-full px-4 py-2.5 text-sm rounded-lg border border-neutral-200 focus:outline-none focus:border-[#8b1a2a]"
+                    className="w-full px-4 py-2.5 text-[15px] rounded-lg border border-neutral-200 focus:outline-none focus:border-[#8b1a2a]"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">Stock Count</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-neutral-400">Stock Count</label>
                   <input
                     type="number"
                     value={stock}
                     onChange={(e) => setStock(Number(e.target.value))}
-                    className="w-full px-4 py-2.5 text-sm rounded-lg border border-neutral-200 focus:outline-none focus:border-[#8b1a2a]"
+                    className="w-full px-4 py-2.5 text-[15px] rounded-lg border border-neutral-200 focus:outline-none focus:border-[#8b1a2a]"
                   />
                 </div>
               </div>
 
               <div className="space-y-1">
-                <label className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">Product Image</label>
+                <label className="text-xs font-bold uppercase tracking-wider text-neutral-400">Product Image</label>
                 <div className="flex items-start gap-4">
                   {imageUrl ? (
                     <div className="relative size-24 rounded-lg overflow-hidden border border-neutral-200">
@@ -453,7 +453,7 @@ export const AdminProducts: React.FC = () => {
                     </div>
                   )}
                   <div className="flex-1 space-y-2">
-                    <label className="flex items-center justify-center px-4 py-2 border border-neutral-200 rounded-lg shadow-sm text-sm font-medium text-neutral-700 bg-white hover:bg-neutral-50 cursor-pointer">
+                    <label className="flex items-center justify-center px-4 py-2 border border-neutral-200 rounded-lg shadow-sm text-[15px] font-medium text-neutral-700 bg-white hover:bg-neutral-50 cursor-pointer">
                       {isUploading ? (
                         <>
                           <Loader2 className="animate-spin mr-2" size={16} />
@@ -473,7 +473,7 @@ export const AdminProducts: React.FC = () => {
                         disabled={isUploading}
                       />
                     </label>
-                    <p className="text-xs text-neutral-500">
+                    <p className="text-[13px] text-neutral-500">
                       PNG, JPG, GIF up to 10MB. 
                     </p>
                   </div>
@@ -481,34 +481,34 @@ export const AdminProducts: React.FC = () => {
               </div>
 
               <div className="space-y-1">
-                <label className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">Short Description</label>
+                <label className="text-xs font-bold uppercase tracking-wider text-neutral-400">Short Description</label>
                 <input
                   type="text"
                   placeholder="An iconic double-breasted trench coat..."
                   value={shortDescription}
                   onChange={(e) => setShortDescription(e.target.value)}
-                  className="w-full px-4 py-2.5 text-sm rounded-lg border border-neutral-200 focus:outline-none focus:border-[#8b1a2a]"
+                  className="w-full px-4 py-2.5 text-[15px] rounded-lg border border-neutral-200 focus:outline-none focus:border-[#8b1a2a]"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">Long details (split by newline)</label>
+                <label className="text-xs font-bold uppercase tracking-wider text-neutral-400">Long details (split by newline)</label>
                 <textarea
                   placeholder="Outer: 100% cotton gabardine&#10;Lining: 100% viscose"
                   value={longDescription}
                   onChange={(e) => setLongDescription(e.target.value)}
                   rows={3}
-                  className="w-full px-4 py-2.5 text-sm rounded-lg border border-neutral-200 focus:outline-none focus:border-[#8b1a2a]"
+                  className="w-full px-4 py-2.5 text-[15px] rounded-lg border border-neutral-200 focus:outline-none focus:border-[#8b1a2a]"
                 />
               </div>
 
               {/* Sizes and Colors Section */}
               <div className="border-t border-neutral-100 pt-4 space-y-4">
-                <h4 className="text-xs uppercase tracking-widest text-[#8b1a2a] font-bold">Sizes & Colors</h4>
+                <h4 className="text-[13px] uppercase tracking-widest text-[#8b1a2a] font-bold">Sizes & Colors</h4>
                 
                 {/* Sizes Management */}
                 <div className="space-y-2">
-                  <label className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">Available Sizes</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-neutral-400">Available Sizes</label>
                   <div className="flex flex-wrap gap-2">
                     {['XS', 'S', 'M', 'L', 'XL', 'XXL', '30', '32', '34', '36', '38', '40', '42'].map((size) => {
                       const isSelected = sizes.includes(size);
@@ -523,7 +523,7 @@ export const AdminProducts: React.FC = () => {
                               setSizes([...sizes, size]);
                             }
                           }}
-                          className={`px-3 py-1.5 rounded-lg border text-xs font-semibold transition-all ${
+                          className={`px-3 py-1.5 rounded-lg border text-[13px] font-semibold transition-all ${
                             isSelected
                               ? 'bg-[#8b1a2a] text-white border-[#8b1a2a] shadow-sm'
                               : 'bg-white text-neutral-600 border-neutral-200 hover:border-neutral-300'
@@ -542,7 +542,7 @@ export const AdminProducts: React.FC = () => {
                       placeholder="Custom e.g. OS, 44"
                       value={customSize}
                       onChange={(e) => setCustomSize(e.target.value)}
-                      className="px-3 py-1.5 text-xs rounded-lg border border-neutral-200 focus:outline-none focus:border-[#8b1a2a] flex-1"
+                      className="px-3 py-1.5 text-[13px] rounded-lg border border-neutral-200 focus:outline-none focus:border-[#8b1a2a] flex-1"
                     />
                     <button
                       type="button"
@@ -553,7 +553,7 @@ export const AdminProducts: React.FC = () => {
                           setCustomSize('');
                         }
                       }}
-                      className="bg-neutral-100 hover:bg-neutral-200 text-neutral-700 px-3 py-1.5 rounded-lg text-xs font-bold transition-colors"
+                      className="bg-neutral-100 hover:bg-neutral-200 text-neutral-700 px-3 py-1.5 rounded-lg text-[13px] font-bold transition-colors"
                     >
                       Add Custom
                     </button>
@@ -562,12 +562,12 @@ export const AdminProducts: React.FC = () => {
 
                 {/* Colors Management */}
                 <div className="space-y-2">
-                  <label className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">Available Colors</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-neutral-400">Available Colors</label>
                   <div className="flex flex-wrap gap-2 mb-2">
                     {colors.map((c, idx) => (
                       <div
                         key={idx}
-                        className="flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-neutral-200 bg-neutral-50 shadow-sm text-xs font-medium text-neutral-800"
+                        className="flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-neutral-200 bg-neutral-50 shadow-sm text-[13px] font-medium text-neutral-800"
                       >
                         <span
                           className="size-3.5 rounded-full border border-black/10 inline-block shrink-0"
@@ -577,7 +577,7 @@ export const AdminProducts: React.FC = () => {
                         <button
                           type="button"
                           onClick={() => setColors(colors.filter((_, i) => i !== idx))}
-                          className="text-neutral-400 hover:text-red-500 font-bold ml-1 text-[10px]"
+                          className="text-neutral-400 hover:text-red-500 font-bold ml-1 text-xs"
                         >
                           ✕
                         </button>
@@ -588,7 +588,7 @@ export const AdminProducts: React.FC = () => {
                   {/* Add Color Form */}
                   <div className="flex flex-wrap items-center gap-2 mt-2 p-3 bg-neutral-50 rounded-xl border border-neutral-100">
                     <div className="flex items-center gap-2">
-                      <span className="text-xs text-neutral-500">Picker:</span>
+                      <span className="text-[13px] text-neutral-500">Picker:</span>
                       <input
                         type="color"
                         value={newColorHex}
@@ -601,7 +601,7 @@ export const AdminProducts: React.FC = () => {
                       placeholder="Color name e.g. Navy Blue"
                       value={newColorName}
                       onChange={(e) => setNewColorName(e.target.value)}
-                      className="px-3 py-1.5 text-xs rounded-lg border border-neutral-200 focus:outline-none focus:border-[#8b1a2a] min-w-[150px]"
+                      className="px-3 py-1.5 text-[13px] rounded-lg border border-neutral-200 focus:outline-none focus:border-[#8b1a2a] min-w-[150px]"
                     />
                     <button
                       type="button"
@@ -619,7 +619,7 @@ export const AdminProducts: React.FC = () => {
                           alert('Please enter a color name');
                         }
                       }}
-                      className="bg-[#8b1a2a] text-white hover:bg-[#6b1420] px-4 py-1.5 rounded-lg text-xs font-bold transition-all shadow-sm"
+                      className="bg-[#8b1a2a] text-white hover:bg-[#6b1420] px-4 py-1.5 rounded-lg text-[13px] font-bold transition-all shadow-sm"
                     >
                       + Add Color
                     </button>
@@ -628,7 +628,7 @@ export const AdminProducts: React.FC = () => {
               </div>
 
               <div className="flex flex-wrap gap-6 py-2">
-                <label className="flex items-center gap-2 text-xs font-bold text-neutral-700 select-none cursor-pointer">
+                <label className="flex items-center gap-2 text-[13px] font-bold text-neutral-700 select-none cursor-pointer">
                   <input
                     type="checkbox"
                     checked={status}
@@ -637,7 +637,7 @@ export const AdminProducts: React.FC = () => {
                   />
                   Product is Active / Visible to Public
                 </label>
-                <label className="flex items-center gap-2 text-xs font-bold text-neutral-700 select-none cursor-pointer">
+                <label className="flex items-center gap-2 text-[13px] font-bold text-neutral-700 select-none cursor-pointer">
                   <input
                     type="checkbox"
                     checked={featured}
@@ -646,7 +646,7 @@ export const AdminProducts: React.FC = () => {
                   />
                   Mark as Featured
                 </label>
-                <label className="flex items-center gap-2 text-xs font-bold text-neutral-700 select-none cursor-pointer">
+                <label className="flex items-center gap-2 text-[13px] font-bold text-neutral-700 select-none cursor-pointer">
                   <input
                     type="checkbox"
                     checked={trending}
@@ -658,25 +658,25 @@ export const AdminProducts: React.FC = () => {
               </div>
 
               <div className="space-y-3 pt-2 border-t border-neutral-100">
-                <h4 className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">SEO Settings</h4>
+                <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-400">SEO Settings</h4>
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">SEO Title</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-neutral-400">SEO Title</label>
                   <input
                     type="text"
                     placeholder="Premium Trench Coat | Superior Trends"
                     value={seoTitle}
                     onChange={(e) => setSeoTitle(e.target.value)}
-                    className="w-full px-4 py-2.5 text-sm rounded-lg border border-neutral-200 focus:outline-none focus:border-[#8b1a2a]"
+                    className="w-full px-4 py-2.5 text-[15px] rounded-lg border border-neutral-200 focus:outline-none focus:border-[#8b1a2a]"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">SEO Description</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-neutral-400">SEO Description</label>
                   <textarea
                     placeholder="Shop our iconic double-breasted trench coat..."
                     value={seoDescription}
                     onChange={(e) => setSeoDescription(e.target.value)}
                     rows={2}
-                    className="w-full px-4 py-2.5 text-sm rounded-lg border border-neutral-200 focus:outline-none focus:border-[#8b1a2a]"
+                    className="w-full px-4 py-2.5 text-[15px] rounded-lg border border-neutral-200 focus:outline-none focus:border-[#8b1a2a]"
                   />
                 </div>
               </div>
@@ -686,14 +686,14 @@ export const AdminProducts: React.FC = () => {
               <button
                 type="button"
                 onClick={resetForm}
-                className="px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-neutral-500 hover:bg-neutral-100 rounded-lg transition-colors"
+                className="px-5 py-2.5 text-[13px] font-bold uppercase tracking-wider text-neutral-500 hover:bg-neutral-100 rounded-lg transition-colors"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={isSaving || createMutation.isPending || updateMutation.isPending}
-                className="bg-[#8b1a2a] text-white px-6 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider hover:bg-[#6b1420] transition-colors flex items-center gap-2 disabled:opacity-75"
+                className="bg-[#8b1a2a] text-white px-6 py-2.5 rounded-lg text-[13px] font-bold uppercase tracking-wider hover:bg-[#6b1420] transition-colors flex items-center gap-2 disabled:opacity-75"
               >
                 {(isSaving || createMutation.isPending || updateMutation.isPending) && (
                   <Loader2 className="animate-spin" size={14} />
@@ -714,19 +714,19 @@ export const AdminProducts: React.FC = () => {
       ) : !products || products.length === 0 ? (
         <div className="py-20 text-center border border-dashed border-neutral-300 bg-white rounded-2xl">
           <ImageIcon className="mx-auto text-neutral-300 mb-3" size={32} />
-          <p className="text-sm font-medium text-neutral-600">No products found</p>
-          <p className="text-xs text-neutral-400 mt-1">Upload premium clothes to present them to your customers.</p>
+          <p className="text-[15px] font-medium text-neutral-600">No products found</p>
+          <p className="text-[13px] text-neutral-400 mt-1">Upload premium clothes to present them to your customers.</p>
         </div>
       ) : (
         <div className="bg-white border border-neutral-200 shadow-sm rounded-2xl overflow-x-auto">
           <table className="w-full min-w-[640px] text-left border-collapse">
             <thead>
               <tr className="bg-neutral-50 border-b border-neutral-200">
-                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-neutral-400">Product</th>
-                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-neutral-400">SKU</th>
-                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-neutral-400">Price</th>
-                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-neutral-400">Stock</th>
-                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-wider text-neutral-400 text-right">Actions</th>
+                <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-neutral-400">Product</th>
+                <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-neutral-400">SKU</th>
+                <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-neutral-400">Price</th>
+                <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-neutral-400">Stock</th>
+                <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-neutral-400 text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-neutral-100">
@@ -745,17 +745,17 @@ export const AdminProducts: React.FC = () => {
                       </div>
                     )}
                     <div>
-                      <p className="text-xs font-bold text-neutral-800">{p.name}</p>
-                      <p className="text-[10px] text-neutral-400">
+                      <p className="text-[13px] font-bold text-neutral-800">{p.name}</p>
+                      <p className="text-xs text-neutral-400">
                         {getCategoryPath(p.categoryId, flatCategories)}
                       </p>
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-xs font-mono text-neutral-500">{p.sku || '—'}</td>
-                  <td className="px-6 py-4 text-xs font-bold text-neutral-800">
+                  <td className="px-6 py-4 text-[13px] font-mono text-neutral-500">{p.sku || '—'}</td>
+                  <td className="px-6 py-4 text-[13px] font-bold text-neutral-800">
                     {formatINR(p.salePrice ?? p.price)}
                   </td>
-                  <td className="px-6 py-4 text-xs text-neutral-600">{p.stock !== undefined ? p.stock : 10}</td>
+                  <td className="px-6 py-4 text-[13px] text-neutral-600">{p.stock !== undefined ? p.stock : 10}</td>
                   <td className="px-6 py-4 text-right space-x-2">
                     <button
                       onClick={() => handleEditClick(p)}

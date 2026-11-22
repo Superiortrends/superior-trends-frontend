@@ -30,13 +30,13 @@ export const StatCard: React.FC<StatCardProps> = ({
     <Card className={cn('!py-5 !gap-0 hover:shadow-md h-full', className)}>
       <div className="flex items-start justify-between gap-3 px-6">
         <div className="flex flex-col gap-2 min-w-0 flex-1">
-          <span className="text-[10px] font-black uppercase tracking-widest text-neutral-400">{label}</span>
+          <span className="text-xs font-black uppercase tracking-widest text-neutral-400">{label}</span>
           <p className="text-3xl font-black text-neutral-900 leading-none tabular-nums">{value}</p>
-          {trend && <p className="text-[10px] font-bold text-emerald-600">{trend}</p>}
+          {trend && <p className="text-xs font-bold text-emerald-600">{trend}</p>}
           {link && (
             <Link
               to={link}
-              className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-[#8b1a2a] hover:underline mt-1"
+              className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-widest text-[#8b1a2a] hover:underline mt-1"
             >
               {linkLabel} <ArrowUpRight size={12} />
             </Link>

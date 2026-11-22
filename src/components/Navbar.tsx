@@ -10,7 +10,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useAuthStore } from '../store/useAuthStore';
 import { useCategories } from '../hooks/useProducts';
 import { useLanguage } from '../context/LanguageContext';
-import { useSettings } from '../hooks/useSettings';
+import { useDeliverySettings } from '../hooks/useSettings';
 import logo from '../assets/logo.png';
 
 // ─── tiny helpers ────────────────────────────────────────────────────────────
@@ -40,9 +40,7 @@ export const Navbar: React.FC = () => {
   const { user, logout } = useAuthStore();
   const { data: categories } = useCategories();
   const { language, setLanguage, t } = useLanguage();
-  const { data: settings } = useSettings();
-
-  const freeShippingThreshold = Number(settings?.free_shipping_threshold ?? '50');
+  const { threshold: freeShippingThreshold } = useDeliverySettings();
 
   const rootCategories = React.useMemo(() => {
     if (!categories) return [];

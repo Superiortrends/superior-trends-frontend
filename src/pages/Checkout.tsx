@@ -23,7 +23,7 @@ import { getProductImageUrl } from '../lib/optimizeImage';
 import { formatINR } from '../lib/formatCurrency';
 import { createCheckoutOrder, createThawaniSession, getSavedCards, payWithSavedCard, type ThawaniSavedCard } from '../lib/api';
 import { useToast } from '../hooks/useToast';
-import { useSettings } from '../hooks/useSettings';
+import { useSettings, useDeliverySettings } from '../hooks/useSettings';
 import { useApplyCouponMutation, useActiveCoupons } from '../hooks/useCoupons';
 import type { OrderRow } from '../lib/orderTypes';
 import { useLanguage } from '../context/LanguageContext';
@@ -311,9 +311,8 @@ export const Checkout: React.FC = () => {
   };
 
   const codAllowed = settings?.cod_allowed !== 'false';
-  const freeShippingThreshold = Number(settings?.free_shipping_threshold ?? '1500');
-  const standardShippingCharge = Number(settings?.shipping_charge ?? '100');
-  const shippingFee = cartTotal >= freeShippingThreshold || cartTotal === 0 ? 0 : standardShippingCharge;
+  const { threshold: freeShippingThreshold, shippingFor, daysLabel } = useDeliverySettings();
+  const shippingFee = shippingFor(cartTotal);
 
   const systemDiscount = cartTotal * discount;
   const finalDiscount = systemDiscount + couponDiscount;
@@ -731,7 +730,7 @@ export const Checkout: React.FC = () => {
                   <div className="flex items-center gap-2 bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-3">
                     <Package size={15} className="text-emerald-600 shrink-0" />
                     <p className="text-xs text-emerald-700 font-semibold">
-                      {language === 'ar' ? 'التوصيل المتوقع خلال ٣-٥ أيام عمل' : 'Estimated delivery in 3–5 business days'}
+                      {language === 'ar' ? `التوصيل المتوقع خلال ${daysLabel('ar')} أيام عمل` : `Estimated delivery in ${daysLabel('en')} business days`}
                     </p>
                   </div>
 

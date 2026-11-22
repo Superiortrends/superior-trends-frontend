@@ -4,13 +4,11 @@ import { Sparkles, Heart, Leaf, Award, Globe, ShieldCheck, TrendingUp, ChevronRi
 import { PageHeader } from '../components/PageHeader';
 import { PageShell } from '../components/PageShell';
 import { useLanguage } from '../context/LanguageContext';
-import { useSettings } from '../hooks/useSettings';
+import { useDeliverySettings } from '../hooks/useSettings';
 
 export const About: React.FC = () => {
   const { language, isRtl } = useLanguage();
-  const { data: settings } = useSettings();
-  
-  const freeShippingThreshold = Number(settings?.free_shipping_threshold ?? '50');
+  const { threshold: freeShippingThreshold } = useDeliverySettings();
 
   const values = [
     {
