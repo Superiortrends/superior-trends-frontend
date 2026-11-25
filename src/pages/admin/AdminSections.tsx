@@ -92,21 +92,28 @@ export const AdminSections: React.FC = () => {
     setIsFormOpen(true);
   };
 
+  // A section's product list also drives the storefront's /shop?section=<slug> results,
+  // so those cached product queries must be refreshed too (the ['sections'] prefix covers the admin key).
+  const refreshSectionData = () => {
+    queryClient.invalidateQueries({ queryKey: ['sections'] });
+    queryClient.invalidateQueries({ queryKey: ['products'] });
+  };
+
   const createMutation = useMutation({
     mutationFn: createSection,
-    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['sections'] }); queryClient.invalidateQueries({ queryKey: ['sections', 'admin'] }); resetForm(); },
+    onSuccess: () => { refreshSectionData(); resetForm(); },
     onError: (error: any) => { alert(error.response?.data?.message || 'Failed to create section'); },
   });
 
   const updateMutation = useMutation({
     mutationFn: (data: { id: string; payload: any }) => updateSection(data.id, data.payload),
-    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['sections'] }); queryClient.invalidateQueries({ queryKey: ['sections', 'admin'] }); resetForm(); },
+    onSuccess: () => { refreshSectionData(); resetForm(); },
     onError: (error: any) => { alert(error.response?.data?.message || 'Failed to update section'); },
   });
 
   const deleteMutation = useMutation({
     mutationFn: deleteSection,
-    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['sections'] }); queryClient.invalidateQueries({ queryKey: ['sections', 'admin'] }); },
+    onSuccess: () => { refreshSectionData(); },
     onError: (error: any) => { alert(error.response?.data?.message || 'Failed to delete section'); },
   });
 

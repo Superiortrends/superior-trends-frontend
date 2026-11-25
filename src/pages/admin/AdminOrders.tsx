@@ -1,7 +1,8 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import {
-  Loader2, Package, X, Mail, Phone, MapPin, CreditCard, Calendar, Truck, User, ShoppingBag, Undo2,
-  Search, Download, Printer, MessageCircle, ChevronLeft, ChevronRight, Clock,
+  ChevronDown, Check, Loader2, Package, X, Mail, Phone, MapPin, CreditCard, Calendar, Truck, User, ShoppingBag, Undo2,
+  Search, Download, Printer, ChevronLeft, ChevronRight, Clock,
 } from 'lucide-react';
 import { useAdminOrders, useUpdateOrderStatus, useRefundOrder } from '../../hooks/useOrders';
 import { ORDER_STATUS_LABELS, type OrderRow, type OrderStatus } from '../../lib/orderTypes';
@@ -16,6 +17,108 @@ type StatusFilter = 'ALL' | OrderStatus;
 type PayFilter = 'ALL' | 'PAID' | 'COD';
 type RangeFilter = 'ALL' | 'TODAY' | '7D' | '30D';
 type SortKey = 'NEW' | 'OLD' | 'HIGH';
+
+/** Official WhatsApp logo (brand green) */
+function WhatsAppIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="#25D366" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+    </svg>
+  );
+}
+
+/** Themed status dropdown (native <select> lists can't be styled). Menu is portalled so the table's overflow can't clip it. */
+function StatusSelect({
+  value, onChange, disabled,
+}: { value: string; onChange: (next: string) => void; disabled?: boolean }) {
+  const [open, setOpen] = useState(false);
+  const [pos, setPos] = useState<{ top: number; left: number; width: number; up: boolean } | null>(null);
+  const btnRef = useRef<HTMLButtonElement>(null);
+  const cfg = orderStatusConfig(value);
+
+  const toggle = () => {
+    if (open) { setOpen(false); return; }
+    const r = btnRef.current?.getBoundingClientRect();
+    if (!r) return;
+    const menuH = ALL_STATUSES.length * 36 + 12;
+    const up = r.bottom + menuH > window.innerHeight && r.top > menuH;
+    setPos({ top: up ? r.top - 6 : r.bottom + 6, left: r.left, width: Math.max(r.width, 160), up });
+    setOpen(true);
+  };
+
+  useEffect(() => {
+    if (!open) return;
+    const close = () => setOpen(false);
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') close(); };
+    window.addEventListener('scroll', close, true);
+    window.addEventListener('resize', close);
+    window.addEventListener('keydown', onKey);
+    return () => {
+      window.removeEventListener('scroll', close, true);
+      window.removeEventListener('resize', close);
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [open]);
+
+  return (
+    <>
+      <button
+        ref={btnRef}
+        type="button"
+        onClick={toggle}
+        disabled={disabled}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        className={`inline-flex items-center gap-2 bg-white border rounded-lg pl-2.5 pr-2 py-1.5 text-xs font-semibold text-neutral-800 transition-colors disabled:opacity-50 ${
+          open ? 'border-[#8b1a2a]' : 'border-neutral-200 hover:border-[#8b1a2a]/50'
+        }`}
+      >
+        <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${cfg.dot}`} />
+        {cfg.label}
+        <ChevronDown size={13} className={`text-neutral-400 transition-transform ${open ? 'rotate-180' : ''}`} />
+      </button>
+
+      {open && pos && createPortal(
+        <>
+          <div className="fixed inset-0 z-[9998]" onClick={() => setOpen(false)} />
+          <div
+            role="listbox"
+            style={{
+              position: 'fixed',
+              top: pos.top,
+              left: pos.left,
+              minWidth: pos.width,
+              transform: pos.up ? 'translateY(-100%)' : undefined,
+            }}
+            className="z-[9999] bg-white border border-neutral-200 rounded-xl shadow-xl p-1.5 font-display"
+          >
+            {ALL_STATUSES.map((s) => {
+              const c = orderStatusConfig(s);
+              const selected = s === value;
+              return (
+                <button
+                  key={s}
+                  type="button"
+                  role="option"
+                  aria-selected={selected}
+                  onClick={() => { setOpen(false); if (!selected) onChange(s); }}
+                  className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold text-left transition-colors ${
+                    selected ? 'bg-[#8b1a2a]/10 text-[#8b1a2a]' : 'text-neutral-700 hover:bg-neutral-50'
+                  }`}
+                >
+                  <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${c.dot}`} />
+                  <span className="flex-1">{ORDER_STATUS_LABELS[s] || s}</span>
+                  {selected && <Check size={13} />}
+                </button>
+              );
+            })}
+          </div>
+        </>,
+        document.body,
+      )}
+    </>
+  );
+}
 
 /* ─── Helpers ─────────────────────────────────────────────────────────────── */
 function paymentMethodLabel(method: string) {
@@ -207,6 +310,14 @@ export const AdminOrders: React.FC = () => {
   }, [selectedOrder]);
 
   const handleStatusChange = async (orderId: string, newStatus: string) => {
+    const current = orders.find((o: OrderRow) => o.id === orderId)?.orderStatus;
+    if (current === 'DELIVERED' || current === 'CANCELLED') {
+      const label = ORDER_STATUS_LABELS[newStatus as OrderStatus] || newStatus;
+      const note = current === 'CANCELLED'
+        ? 'Stock will be deducted again for this order.'
+        : 'COD payment will be marked unpaid again.';
+      if (!window.confirm(`This order is already ${current.toLowerCase()}. Change it to ${label}?\n\n${note}`)) return;
+    }
     try {
       await updateStatus.mutateAsync({ id: orderId, orderStatus: newStatus });
       showToast(`Order updated to ${ORDER_STATUS_LABELS[newStatus as OrderStatus] || newStatus}`, 'success');
@@ -424,7 +535,6 @@ export const AdminOrders: React.FC = () => {
                   {pageRows.map((order: OrderRow) => {
                     const payMethod = getPaymentMethod(order);
                     const sc = orderStatusConfig(order.orderStatus);
-                    const isTerminal = order.orderStatus === 'DELIVERED' || order.orderStatus === 'CANCELLED';
                     const first = order.items[0];
                     const itemCount = order.items.reduce((n, i) => n + i.quantity, 0);
                     const phone = customerPhone(order);
@@ -478,22 +588,11 @@ export const AdminOrders: React.FC = () => {
                           </p>
                         </td>
                         <td className="px-4 py-3.5" onClick={(e) => e.stopPropagation()}>
-                          {isTerminal ? (
-                            <span className={`text-xs font-bold ${order.orderStatus === 'DELIVERED' ? 'text-emerald-600' : 'text-red-500'}`}>
-                              {order.orderStatus === 'DELIVERED' ? '✓ Delivered' : '✕ Cancelled'}
-                            </span>
-                          ) : (
-                            <select
-                              value={order.orderStatus}
-                              onChange={e => e.target.value !== order.orderStatus && handleStatusChange(order.id, e.target.value)}
-                              disabled={updateStatus.isPending}
-                              className="bg-white border border-neutral-200 rounded-lg px-2.5 py-1.5 text-neutral-800 text-xs font-semibold focus:outline-none focus:border-[#8b1a2a] hover:border-neutral-300 disabled:opacity-50"
-                            >
-                              {ALL_STATUSES.map(s => (
-                                <option key={s} value={s}>{ORDER_STATUS_LABELS[s] || s}</option>
-                              ))}
-                            </select>
-                          )}
+                          <StatusSelect
+                            value={order.orderStatus}
+                            onChange={(next) => handleStatusChange(order.id, next)}
+                            disabled={updateStatus.isPending}
+                          />
                         </td>
                         <td className="px-4 py-3.5 text-right">
                           <span className="text-xs font-bold text-[#8b1a2a] bg-[#8b1a2a]/6 px-3 py-1.5 rounded-lg border border-[#8b1a2a]/15 whitespace-nowrap">
@@ -544,7 +643,7 @@ export const AdminOrders: React.FC = () => {
 
             {/* panel */}
             <div className="absolute inset-y-0 right-0 flex w-full max-w-2xl">
-              <div className="w-full bg-white shadow-2xl border-l border-neutral-200 h-full overflow-y-auto overscroll-contain">
+              <div data-lenis-prevent className="w-full bg-white shadow-2xl border-l border-neutral-200 h-full overflow-y-auto overscroll-contain">
 
                 {/* Drawer header */}
                 <div className="sticky top-0 z-10 flex items-center justify-between px-6 py-5 border-b border-neutral-100 bg-white">
@@ -575,9 +674,9 @@ export const AdminOrders: React.FC = () => {
                         rel="noopener noreferrer"
                         title="Message customer on WhatsApp"
                         aria-label="Message customer on WhatsApp"
-                        className="p-2 rounded-xl text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 transition-colors border border-neutral-200"
+                        className="p-2 rounded-xl hover:bg-emerald-50 transition-colors border border-neutral-200"
                       >
-                        <MessageCircle size={16} />
+                        <WhatsAppIcon size={16} />
                       </a>
                     )}
                     <button
@@ -755,7 +854,7 @@ export const AdminOrders: React.FC = () => {
                     )}
 
                     {/* Status updater in drawer */}
-                    {selectedOrder.orderStatus !== 'DELIVERED' && selectedOrder.orderStatus !== 'CANCELLED' && (
+                    {(
                       <div className="pb-2">
                         <SectionTitle>Update Status</SectionTitle>
                         <div className="flex flex-wrap gap-2">

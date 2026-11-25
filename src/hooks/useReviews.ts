@@ -41,6 +41,8 @@ export const useMyReviewStatus = (productId?: string) => {
     queryFn: () => getMyReviewStatus(productId!),
     enabled: !!productId && isAuthenticated,
     staleTime: 30_000,
+    // Admin may approve/reject at any time — always re-check when the page is opened
+    refetchOnMount: 'always',
   });
 };
 

@@ -8,7 +8,7 @@ import { getRootCategories } from '../../lib/categoryHelpers';
 
 export const AdminCategories: React.FC = () => {
   const queryClient = useQueryClient();
-  const { data: flatCategories, isLoading } = useCategories({ flat: true });
+  const { data: flatCategories, isLoading } = useCategories({ flat: true }, { admin: true });
   const rootCategories = getRootCategories(flatCategories);
 
   const sortedForTable = [...(flatCategories ?? [])].sort((a, b) => {

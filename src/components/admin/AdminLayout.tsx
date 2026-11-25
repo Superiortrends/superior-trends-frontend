@@ -12,6 +12,7 @@ import {
   Loader2,
   FileText,
   Mail,
+  MailPlus,
   Settings,
   Ticket,
   Star,
@@ -57,6 +58,7 @@ export const AdminLayout: React.FC = () => {
     { path: '/admin/coupons', label: 'Coupons', icon: <Ticket size={18} /> },
     { path: '/admin/settings', label: 'Settings', icon: <Settings size={18} /> },
     { path: '/admin/contact', label: 'Contact', icon: <Mail size={18} /> },
+    { path: '/admin/subscribers', label: 'Subscribers', icon: <MailPlus size={18} /> },
   ];
 
   const closeSidebar = () => setSidebarOpen(false);

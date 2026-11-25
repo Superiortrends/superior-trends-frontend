@@ -34,6 +34,7 @@ const AdminBlogCategories = lazy(() => import('./pages/admin/AdminBlogCategories
 const AdminCoupons = lazy(() => import('./pages/admin/AdminCoupons').then((m) => ({ default: m.AdminCoupons })));
 const AdminSettings = lazy(() => import('./pages/admin/AdminSettings').then((m) => ({ default: m.AdminSettings })));
 const AdminContact = lazy(() => import('./pages/admin/AdminContact').then((m) => ({ default: m.AdminContact })));
+const AdminSubscribers = lazy(() => import('./pages/admin/AdminSubscribers').then((m) => ({ default: m.AdminSubscribers })));
 const MyOrders = lazy(() => import('./pages/MyOrders').then((m) => ({ default: m.MyOrders })));
 const PaymentCallback = lazy(() => import('./pages/PaymentCallback').then((m) => ({ default: m.PaymentCallback })));
 const RefundPolicy = lazy(() => import('./pages/RefundPolicy').then((m) => ({ default: m.RefundPolicy })));
@@ -101,6 +102,7 @@ function App() {
                             <Route path="coupons" element={<AdminCoupons />} />
                             <Route path="settings" element={<AdminSettings />} />
                             <Route path="contact" element={<AdminContact />} />
+                            <Route path="subscribers" element={<AdminSubscribers />} />
                           </Route>
                         </Routes>
                       </Suspense>

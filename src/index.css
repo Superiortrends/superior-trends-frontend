@@ -97,23 +97,53 @@
     overflow-x: hidden;
   }
 
-  /* Hide standard scrollbars but make nice custom scrollbar */
+  /*
+   * Themed scrollbars — slim thumb in the brand burgundy family.
+   * Chrome / Edge / Safari use the ::-webkit-scrollbar rules. Styling them (instead of the standard
+   * scrollbar-width / scrollbar-color) keeps the bar ALWAYS visible: on Windows the standard
+   * properties fall back to auto-hiding overlay scrollbars that only appear on hover.
+   */
   ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 12px;
+    height: 12px;
   }
 
   ::-webkit-scrollbar-track {
-    background: #F8F5F2;
+    background: rgba(139, 26, 42, 0.05);
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #D8D5D0;
-    border-radius: 3px;
+    background-color: #B98A92;
+    border-radius: 999px;
+    /* transparent border + content-box clip = a slim pill inside the track */
+    border: 3px solid transparent;
+    background-clip: content-box;
   }
 
-  ::-webkit-scrollbar-thumb:hover {
-    background: #D4AF37;
+  ::-webkit-scrollbar-thumb:hover,
+  ::-webkit-scrollbar-thumb:active {
+    background-color: #8B1A2A;
+    background-clip: content-box;
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+  /* Firefox ignores the ::-webkit-scrollbar rules */
+  @supports not selector(::-webkit-scrollbar) {
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: #B98A92 transparent;
+    }
+  }
+}
+
+/* Hide the scrollbar on horizontal sliders while keeping them scrollable */
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
   }
 }
 

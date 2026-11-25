@@ -860,11 +860,12 @@ export const Shop: React.FC = () => {
       })()}
 
       <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-start">
-        <aside
-          data-lenis-prevent
-          className="hidden md:block w-60 lg:w-68 shrink-0 sticky top-32 max-h-[calc(100vh-8rem)] overflow-y-auto overscroll-contain pb-4 select-none [scrollbar-gutter:stable]"
-        >
-          <div className="bg-white/70 backdrop-blur-md border border-brand-border/40 p-6 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.02)] space-y-6">
+        <aside className="hidden md:block w-60 lg:w-68 shrink-0 sticky top-32 pb-4 select-none">
+          {/* The card itself scrolls, so the scrollbar stays inside its rounded corners */}
+          <div
+            data-lenis-prevent
+            className="bg-white/70 backdrop-blur-md border border-brand-border/40 p-6 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.02)] space-y-6 max-h-[calc(100vh-9rem)] overflow-y-auto overscroll-contain [scrollbar-gutter:stable]"
+          >
             {filtersLoading ? <ShopFiltersSkeleton /> : <ShopFiltersPanel {...filterPanelProps} />}
           </div>
         </aside>

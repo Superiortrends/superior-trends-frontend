@@ -21,9 +21,9 @@ export const AdminProducts: React.FC = () => {
   
   // Fetch products & categories
   const { data: products, isLoading } = useProducts({ admin: true });
-  const { data: flatCategories } = useCategories({ flat: true });
+  const { data: flatCategories } = useCategories({ flat: true }, { admin: true });
   const rootCategories = getRootCategories(flatCategories);
-  const { data: collections } = useCollections();
+  const { data: collections } = useCollections({ admin: true });
 
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<any | null>(null);

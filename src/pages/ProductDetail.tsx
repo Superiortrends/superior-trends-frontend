@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
-import { useParams, Link, useSearchParams } from 'react-router-dom';
+import { useParams, Link, useSearchParams, useNavigate } from 'react-router-dom';
 import {
   Heart,
   Plus,
@@ -43,6 +43,7 @@ function pct(price: number, mrp: number) {
 /* ─── Component ─────────────────────────────────────────────────────── */
 export const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const { addToCart, toggleWishlist, isInWishlist } = useShop();
   const { language } = useLanguage();
   const { threshold: freeShippingThreshold, daysLabel } = useDeliverySettings();
@@ -267,7 +268,8 @@ export const ProductDetail: React.FC = () => {
   const discount = mrp ? pct(product.price, mrp) : null;
   const hasMultipleImages = product.images.length > 1;
 
-  const handleAddToCart = () => {
+  /** Validates size/colour and adds to cart. Returns true if added. */
+  const addSelectionToCart = (opts?: { silent?: boolean }): boolean => {
     const missingSize = !selectedSize;
     const missingColor = !selectedColor;
     if (missingSize || missingColor) {
@@ -282,12 +284,25 @@ export const ProductDetail: React.FC = () => {
         'error',
       );
       document.getElementById('size-selector')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      return;
+      return false;
     }
     setSizeError(false);
     setColorError(false);
     addToCart(product, quantity, selectedSize, selectedColor, { mode: 'set' });
-    showToast(language === 'ar' ? 'تمت الإضافة إلى السلة ✦' : 'Added to your basket ✦', 'success');
+    if (!opts?.silent) {
+      showToast(language === 'ar' ? 'تمت الإضافة إلى السلة ✦' : 'Added to your basket ✦', 'success');
+    }
+    return true;
+  };
+
+  const handleAddToCart = () => {
+    addSelectionToCart();
+  };
+
+  const handleBuyNow = () => {
+    if (addSelectionToCart({ silent: true })) {
+      navigate('/checkout');
+    }
   };
 
   const toggleAccordion = (section: 'desc' | 'care' | 'shipping') =>
@@ -499,7 +514,7 @@ export const ProductDetail: React.FC = () => {
           {/* ══════════════════════════════════════
               RIGHT: Product Info
           ══════════════════════════════════════ */}
-          <div className="flex flex-col gap-5 lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto lg:pr-1 scrollbar-thin">
+          <div className="flex flex-col gap-5">
 
             {/* Category + Name */}
             <div>
@@ -696,10 +711,20 @@ export const ProductDetail: React.FC = () => {
                 onClick={handleAddToCart}
                 whileHover={{ scale: 1.015, y: -1 }}
                 whileTap={{ scale: 0.97 }}
-                className="flex-1 relative overflow-hidden bg-[#8b1a2a] text-white py-4 text-sm font-extrabold uppercase tracking-widest rounded-2xl shadow-lg shadow-[#8b1a2a]/25 transition-all hover:shadow-[#8b1a2a]/40 hover:shadow-xl cursor-pointer"
+                className="flex-1 min-w-0 relative overflow-hidden bg-[#8b1a2a] text-white h-14 px-3 text-xs xl:text-sm font-extrabold uppercase tracking-wider rounded-2xl shadow-lg shadow-[#8b1a2a]/25 transition-all hover:shadow-[#8b1a2a]/40 hover:shadow-xl cursor-pointer whitespace-nowrap"
               >
                 <span className="relative z-10">{language === 'ar' ? 'أضف إلى السلة' : 'Add to Cart'}</span>
                 <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full hover:translate-x-full transition-transform duration-700" />
+              </motion.button>
+
+              <motion.button
+                type="button"
+                onClick={handleBuyNow}
+                whileHover={{ scale: 1.015, y: -1 }}
+                whileTap={{ scale: 0.97 }}
+                className="flex-1 min-w-0 bg-brand-charcoal text-white h-14 px-3 text-xs xl:text-sm font-extrabold uppercase tracking-wider rounded-2xl shadow-lg shadow-black/15 transition-all hover:shadow-xl cursor-pointer whitespace-nowrap"
+              >
+                {language === 'ar' ? 'اشترِ الآن' : 'Buy Now'}
               </motion.button>
 
               <motion.button
@@ -935,6 +960,17 @@ export const ProductDetail: React.FC = () => {
             {isAuthenticated && myReviewStatus?.hasReviewed ? (
               // Already reviewed
               <div className="mt-2 w-full text-left rtl:text-right">
+                {myReviewStatus.existingReview?.status === 'REJECTED' ? (
+                  <div className="flex items-center gap-2 bg-red-50 border border-red-200 text-red-800 text-xs font-bold px-4 py-2.5 rounded-xl">
+                    <X size={14} className="text-red-600 shrink-0" />
+                    <div>
+                      <p className="font-extrabold uppercase tracking-wide">{language === 'ar' ? 'لم تتم الموافقة على المراجعة' : 'Review Not Approved'}</p>
+                      <p className="text-red-700/80 font-normal normal-case tracking-normal">
+                        {language === 'ar' ? 'لم تتم الموافقة على مراجعتك ولن تظهر للعامة.' : 'Your review was not approved and is not shown publicly.'}
+                      </p>
+                    </div>
+                  </div>
+                ) : (
                 <div className="flex items-center gap-2 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold px-4 py-2.5 rounded-xl">
                   <BadgeCheck size={14} className="text-emerald-600 shrink-0" />
                   <div>
@@ -946,8 +982,9 @@ export const ProductDetail: React.FC = () => {
                     </p>
                   </div>
                 </div>
-                {/* Show their submitted rating */}
-                {myReviewStatus.existingReview && (
+                )}
+                {/* Show their submitted rating (not for rejected reviews) */}
+                {myReviewStatus.existingReview && myReviewStatus.existingReview.status !== 'REJECTED' && (
                   <div className="mt-2.5 pl-1 space-y-1.5 bg-white border border-brand-border/20 rounded-xl p-3 shadow-sm">
                     <div className="flex items-center gap-1.5">
                       <span className="text-[10px] text-neutral-400 uppercase tracking-widest font-bold">{language === 'ar' ? 'تقييمك:' : 'Your rating:'}</span>
@@ -1254,9 +1291,17 @@ export const ProductDetail: React.FC = () => {
             type="button"
             onClick={handleAddToCart}
             whileTap={{ scale: 0.96 }}
-            className="flex-1 bg-[#8b1a2a] text-white py-3.5 text-xs font-extrabold uppercase tracking-widest rounded-xl shadow-md shadow-[#8b1a2a]/30 transition-all active:scale-95 cursor-pointer"
+            className="flex-1 bg-[#8b1a2a] text-white py-3.5 px-2 text-[11px] font-extrabold uppercase tracking-wider rounded-xl shadow-md shadow-[#8b1a2a]/30 transition-all active:scale-95 cursor-pointer"
           >
             {language === 'ar' ? 'أضف إلى السلة' : 'Add to Cart'}
+          </motion.button>
+          <motion.button
+            type="button"
+            onClick={handleBuyNow}
+            whileTap={{ scale: 0.96 }}
+            className="flex-1 bg-brand-charcoal text-white py-3.5 px-2 text-[11px] font-extrabold uppercase tracking-wider rounded-xl shadow-md transition-all active:scale-95 cursor-pointer"
+          >
+            {language === 'ar' ? 'اشترِ الآن' : 'Buy Now'}
           </motion.button>
           <motion.button
             type="button"

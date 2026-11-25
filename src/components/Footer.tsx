@@ -3,10 +3,13 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Check } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import logo from '../assets/logo.png';
+import { useSubscribeNewsletter, newsletterErrorMessage } from '../hooks/useNewsletter';
 
 export const Footer: React.FC = () => {
   const [email, setEmail]         = useState('');
   const [subscribed, setSubscribed] = useState(false);
+  const [subscribeError, setSubscribeError] = useState('');
+  const subscribe                 = useSubscribeNewsletter();
   const currentYear               = new Date().getFullYear();
   const { language, t }           = useLanguage();
 
@@ -26,10 +29,17 @@ export const Footer: React.FC = () => {
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email.trim()) return;
-    setSubscribed(true);
-    setEmail('');
-    setTimeout(() => setSubscribed(false), 5000);
+    const value = email.trim();
+    if (!value || subscribe.isPending) return;
+    setSubscribeError('');
+    subscribe.mutate(value, {
+      onSuccess: () => {
+        setSubscribed(true);
+        setEmail('');
+        setTimeout(() => setSubscribed(false), 5000);
+      },
+      onError: (err) => setSubscribeError(newsletterErrorMessage(err)),
+    });
   };
 
   return (
@@ -151,18 +161,25 @@ export const Footer: React.FC = () => {
                 <button
                   type="submit"
                   aria-label="Subscribe"
+                  disabled={subscribe.isPending}
                   className="
                     absolute right-2 top-1/2 -translate-y-1/2
                     w-8 h-8 rounded-lg
                     bg-[#8b1a2a] hover:bg-[#d4af37]
                     flex items-center justify-center
                     text-white transition-all duration-200
-                    hover:scale-105 active:scale-95 cursor-pointer
+                    hover:scale-105 active:scale-95 cursor-pointer disabled:opacity-60 disabled:cursor-wait
                   "
                 >
                   {subscribed ? <Check size={13} strokeWidth={2.5} /> : <ArrowRight size={13} className="rtl:rotate-180" />}
                 </button>
               </div>
+
+              {subscribeError && (
+                <p role="alert" className="text-red-300 text-[11px] font-semibold tracking-wide">
+                  {subscribeError}
+                </p>
+              )}
 
               {subscribed && (
                 <p className="text-[#d4af37] text-[11px] font-semibold tracking-wider flex items-center gap-1.5">

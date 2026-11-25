@@ -347,6 +347,22 @@ export const deleteContactMessageAdmin = async (id: string) => {
   return data;
 };
 
+// ── NEWSLETTER API ────────────────────────────────────────────────────────────
+export const subscribeNewsletter = async (email: string) => {
+  const { data } = await api.post('/newsletter/subscribe', { email });
+  return data;
+};
+
+export const getNewsletterSubscribersAdmin = async () => {
+  const { data } = await api.get('/newsletter/admin');
+  return data.data.subscribers;
+};
+
+export const deleteNewsletterSubscriberAdmin = async (id: string) => {
+  const { data } = await api.delete(`/newsletter/${id}`);
+  return data;
+};
+
 // ── BLOG API ──────────────────────────────────────────────────────────────────
 export const getPublishedBlogs = async () => {
   const { data } = await api.get('/blogs');

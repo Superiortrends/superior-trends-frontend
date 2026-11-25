@@ -1,8 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
-  ChevronLeft,
-  ChevronRight,
   ArrowRight,
   Star,
   Heart,
@@ -42,6 +40,63 @@ import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { CenteredScrollRow } from "../components/CenteredScrollRow";
 import { CustomerReviewsCarousel } from "../components/product/ProductReviews";
+import { useSubscribeNewsletter, newsletterErrorMessage } from "../hooks/useNewsletter";
+
+/* ─── Newsletter sign-up (stores the email via the API) ───── */
+const HomeNewsletterForm: React.FC = () => {
+  const { language } = useLanguage();
+  const subscribe = useSubscribeNewsletter();
+  const [email, setEmail] = useState("");
+  const [done, setDone] = useState(false);
+  const [error, setError] = useState("");
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const value = email.trim();
+    if (!value || subscribe.isPending) return;
+    setError("");
+    setDone(false);
+    subscribe.mutate(value, {
+      onSuccess: () => {
+        setDone(true);
+        setEmail("");
+      },
+      onError: (err) => setError(newsletterErrorMessage(err)),
+    });
+  };
+
+  return (
+    <div className="space-y-3">
+      <form onSubmit={onSubmit} className="flex gap-2">
+        <Input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder={language === "ar" ? "أدخل عنوان بريدك الإلكتروني" : "Enter your email address"}
+          className="bg-white border-brand-border h-11 text-sm rounded-xl shadow-xs"
+          required
+        />
+        <Button
+          type="submit"
+          disabled={subscribe.isPending}
+          className="bg-[#8b1a2a] hover:bg-brand-charcoal text-white h-11 px-6 rounded-xl font-bold text-xs uppercase tracking-widest transition-all duration-300 shrink-0 disabled:opacity-60"
+        >
+          {language === "ar" ? "اشترك" : "Subscribe"}
+        </Button>
+      </form>
+      {done && (
+        <p role="status" className="text-[13px] font-semibold text-emerald-700">
+          {language === "ar" ? "شكراً لاشتراكك!" : "Thank you for subscribing!"}
+        </p>
+      )}
+      {error && (
+        <p role="alert" className="text-[13px] font-semibold text-red-600">
+          {error}
+        </p>
+      )}
+    </div>
+  );
+};
 
 /* ─── Reusable animation helpers ──────────────────────────── */
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -237,15 +292,7 @@ function CarouselProductCard({
 }
 
 /* ─── Section header with chevrons (reference style) ───────── */
-function CarouselHeader({
-  title,
-  onLeft,
-  onRight,
-}: {
-  title: string;
-  onLeft?: () => void;
-  onRight?: () => void;
-}) {
+function CarouselHeader({ title }: { title: string }) {
   return (
     <div className="mb-10">
 
@@ -261,25 +308,7 @@ function CarouselHeader({
       </div>
 
       {/* ── Main row ── */}
-      <div className="flex items-center justify-between gap-4">
-
-        {/* Left nav */}
-        <button
-          type="button"
-          onClick={onLeft}
-          aria-label="Scroll left"
-          disabled={!onLeft}
-          className="
-            shrink-0 w-10 h-10 rounded-full
-            border border-neutral-200 bg-white
-            flex items-center justify-center text-neutral-400
-            hover:border-[#8b1a2a] hover:text-white hover:bg-[#8b1a2a]
-            disabled:opacity-0 disabled:pointer-events-none
-            active:scale-95 transition-all duration-200 shadow-sm
-          "
-        >
-          <ChevronLeft size={16} strokeWidth={2} className="rtl:rotate-180" />
-        </button>
+      <div className="flex items-center justify-center gap-4">
 
         {/* Center */}
         <div className="flex flex-col items-center gap-2.5 text-center min-w-0">
@@ -307,24 +336,6 @@ function CarouselHeader({
           </svg>
         </div>
 
-        {/* Right nav */}
-        <button
-          type="button"
-          onClick={onRight}
-          aria-label="Scroll right"
-          disabled={!onRight}
-          className="
-            shrink-0 w-10 h-10 rounded-full
-            border border-neutral-200 bg-white
-            flex items-center justify-center text-neutral-400
-            hover:border-[#8b1a2a] hover:text-white hover:bg-[#8b1a2a]
-            disabled:opacity-0 disabled:pointer-events-none
-            active:scale-95 transition-all duration-200 shadow-sm
-          "
-        >
-          <ChevronRight size={16} strokeWidth={2} className="rtl:rotate-180" />
-        </button>
-
       </div>
     </div>
   );
@@ -348,8 +359,8 @@ function SectionCollections({ section }: { section: HomepageSection }) {
 
   return (
     <Section className="px-4 sm:px-6 lg:px-8 mb-16">
-      <CarouselHeader title={translateDynamic(section.title, language)} onLeft={() => scroll(-1)} onRight={() => scroll(1)} />
-      <CenteredScrollRow onScrollRef={(el) => { (scrollRef as any).current = el; }} gapClass="gap-4">
+      <CarouselHeader title={translateDynamic(section.title, language)} />
+      <CenteredScrollRow onScrollRef={(el) => { (scrollRef as any).current = el; }} onLeft={() => scroll(-1)} onRight={() => scroll(1)} gapClass="gap-4">
         {products.map((product: Product) => (
           <Link
             key={product.id}
@@ -728,9 +739,9 @@ function SectionDepartments({ section }: { section: HomepageSection }) {
 
   return (
     <Section className="px-4 sm:px-6 lg:px-8 mb-16">
-      <CarouselHeader title={translateDynamic(section.title, language)} onLeft={() => scroll(-1)} onRight={() => scroll(1)} />
+      <CarouselHeader title={translateDynamic(section.title, language)} />
 
-      <CenteredScrollRow onScrollRef={(el) => { (scrollRef as any).current = el; }} gapClass="gap-4 sm:gap-6">
+      <CenteredScrollRow onScrollRef={(el) => { (scrollRef as any).current = el; }} onLeft={() => scroll(-1)} onRight={() => scroll(1)} gapClass="gap-4 sm:gap-6">
 
 
         {products.map((product: Product, i: number) => (
@@ -778,8 +789,8 @@ function SectionCarousel({ section }: { section: HomepageSection }) {
 
   return (
     <Section className="px-4 sm:px-6 lg:px-8 mb-16">
-      <CarouselHeader title={translateDynamic(section.title, language)} onLeft={() => scroll(-1)} onRight={() => scroll(1)} />
-      <CenteredScrollRow onScrollRef={(el) => { (scrollRef as any).current = el; }} gapClass="gap-5 sm:gap-6">
+      <CarouselHeader title={translateDynamic(section.title, language)} />
+      <CenteredScrollRow onScrollRef={(el) => { (scrollRef as any).current = el; }} onLeft={() => scroll(-1)} onRight={() => scroll(1)} gapClass="gap-5 sm:gap-6">
         {products.map((uiProduct: Product, i: number) => (
           <CarouselProductCard key={uiProduct.id} product={uiProduct} delay={i * 0.05} variant="carousel" />
         ))}
@@ -1579,26 +1590,7 @@ export const Home: React.FC = () => {
                 : 'Receive private notifications for new collection releases, limited batch runs, and special offers.'}
             </p>
           </div>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              alert(language === 'ar' ? 'شكراً لاشتراكك!' : 'Thank you for subscribing!');
-            }}
-            className="flex gap-2"
-          >
-            <Input
-              type="email"
-              placeholder={language === 'ar' ? 'أدخل عنوان بريدك الإلكتروني' : 'Enter your email address'}
-              className="bg-white border-brand-border h-11 text-sm rounded-xl shadow-xs"
-              required
-            />
-            <Button
-              type="submit"
-              className="bg-[#8b1a2a] hover:bg-brand-charcoal text-white h-11 px-6 rounded-xl font-bold text-xs uppercase tracking-widest transition-all duration-300 shrink-0"
-            >
-              {language === 'ar' ? 'اشترك' : 'Subscribe'}
-            </Button>
-          </form>
+          <HomeNewsletterForm />
         </div>
       </Section>
     </div>

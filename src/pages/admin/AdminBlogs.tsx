@@ -277,10 +277,10 @@ export const AdminBlogs: React.FC = () => {
           {/* backdrop */}
           <div className="absolute inset-0 bg-neutral-900/60 backdrop-blur-sm" onClick={resetForm} />
 
-          {/* sheet */}
+          {/* sheet — always fits the screen; only the form body scrolls (header + footer stay put) */}
           <div className="relative bg-white w-full sm:max-w-3xl sm:rounded-2xl shadow-2xl flex flex-col max-h-[92dvh] sm:max-h-[90dvh] overflow-hidden">
 
-            {/* sticky header */}
+            {/* header */}
             <div className="shrink-0 flex items-center justify-between px-6 py-5 border-b border-neutral-100">
               <div>
                 <h2 className="text-lg font-bold text-neutral-900">{editing ? 'Edit Post' : 'New Post'}</h2>
@@ -291,9 +291,15 @@ export const AdminBlogs: React.FC = () => {
               </button>
             </div>
 
-            {/* scrollable body */}
-            <form onSubmit={handleSubmit} className="flex flex-col flex-1 overflow-hidden">
-              <div data-lenis-prevent className="flex-1 overflow-y-auto overscroll-contain px-6 py-6 space-y-5">
+            {/* scrollable body.
+                data-modal-scroll is REQUIRED: lockScroll() sets overflow-y:hidden on every scrollable element
+                outside [data-modal-scroll], which is what silently killed this modal's scrolling and scrollbar. */}
+            <form onSubmit={handleSubmit} className="flex flex-col flex-1 min-h-0">
+              <div
+                data-modal-scroll
+                data-lenis-prevent
+                className="flex-1 min-h-0 overflow-y-auto overscroll-contain px-6 py-6 space-y-5"
+              >
 
                 {/* Title + Slug */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -421,7 +427,7 @@ export const AdminBlogs: React.FC = () => {
                 </label>
               </div>
 
-              {/* sticky footer */}
+              {/* footer */}
               <div className="shrink-0 flex justify-between items-center gap-3 px-6 py-4 border-t border-neutral-100 bg-white">
                 <div className="text-[13px] text-neutral-400 hidden sm:block">
                   {editing ? `Editing post ID: ${editing.id.slice(0, 8)}…` : 'New post'}

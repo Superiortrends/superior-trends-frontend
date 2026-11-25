@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getProducts, getCategories, getSections, getAllSections, getCollections, getProductById, getProductBySlug } from '../lib/api';
 import { useAdminAuth } from './useAdminAuth';
-import { catalogQueryOptions, STOREFRONT_PRODUCT_LIMIT } from '../lib/queryConfig';
+import { adminQueryOptions, catalogQueryOptions, STOREFRONT_PRODUCT_LIMIT } from '../lib/queryConfig';
 import type { Product } from '../data/products';
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -154,17 +154,17 @@ export const useProducts = (params?: {
       const dbProducts = await getProducts(queryParams);
       return dbProducts.map(mapDbProduct);
     },
-    ...catalogQueryOptions,
+    ...(isAdmin ? adminQueryOptions : catalogQueryOptions),
   });
 };
 
-export const useCategories = (params?: { flat?: boolean }) => {
+export const useCategories = (params?: { flat?: boolean }, opts?: { admin?: boolean }) => {
   return useQuery<DBCategory[]>({
     queryKey: ['categories', params],
     queryFn: async () => {
       return await getCategories(params);
     },
-    ...catalogQueryOptions,
+    ...(opts?.admin ? adminQueryOptions : catalogQueryOptions),
   });
 };
 
@@ -189,13 +189,13 @@ export const useAdminSections = () => {
   });
 };
 
-export const useCollections = () => {
+export const useCollections = (opts?: { admin?: boolean }) => {
   return useQuery<DBCollection[]>({
     queryKey: ['collections'],
     queryFn: async () => {
       return await getCollections();
     },
-    ...catalogQueryOptions,
+    ...(opts?.admin ? adminQueryOptions : catalogQueryOptions),
   });
 };
 
